@@ -1,47 +1,56 @@
 import 'package:flutter/material.dart';
+import 'add_plant.dart'; // Correct the import path if necessary
+import 'plant.dart'; // Assuming you have a Plant model class
+import 'plant_status.dart'; // The screen to display plant details
 
-// ignore: camel_case_types
-class homeScreen extends StatelessWidget {
-  const homeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Plant> plants = []; // Use Plant model instead of Map
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddPlantScreen()),
+    );
+
+    if (result != null && result is Plant) {
+      setState(() {
+        plants.add(result);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your Plants'),
-      ),
+      appBar: AppBar(title: Text('Your Plants')),
       body: GridView.builder(
-        padding: const EdgeInsets.all(8),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Adjust based on your design preference
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisCount: 3,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
         ),
-        itemCount: 20, // Placeholder for the number of plants
+        itemCount: plants.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              // Navigate to plant details
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PlantStatusScreen(plant: plants[index])),
+              );
             },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.green[200],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  'Plant $index',
-                  style: TextStyle(color: Colors.green[900]),
-                ),
-              ),
-            ),
+            child:
+                Image.asset(plants[index].iconPath), // Display the plant icon
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to add plant screen
-        },
+        onPressed: () => _navigateAndDisplaySelection(context),
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
       ),

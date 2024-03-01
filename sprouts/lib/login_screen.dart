@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
         _passwordController.text == storedPassword) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => homeScreen()), // HomeScreen
+        MaterialPageRoute(builder: (context) => HomeScreen()), // HomeScreen
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
