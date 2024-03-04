@@ -1,7 +1,8 @@
+// home_screen.dart
 import 'package:flutter/material.dart';
-import 'add_plant.dart'; // Correct the import path if necessary
-import 'plant.dart'; // Assuming you have a Plant model class
-import 'plant_status.dart'; // The screen to display plant details
+import 'add_plant.dart';
+import 'plant.dart';
+import 'plant_status.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,7 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Plant> plants = []; // Use Plant model instead of Map
+  List<Plant> plants = [];
+
   void _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -44,8 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         PlantStatusScreen(plant: plants[index])),
               );
             },
-            child:
-                Image.asset(plants[index].iconPath), // Display the plant icon
+            child: Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(plants[index].name),
+                ],
+              ),
+            ),
           );
         },
       ),

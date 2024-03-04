@@ -1,50 +1,60 @@
+// Import necessary packages
 import 'package:flutter/material.dart';
-import 'plant.dart';
-import 'edit_plant.dart'; // Ensure this is the correct path to your EditPlantScreen
+import 'package:intl/intl.dart';
+import 'plant.dart'; // Ensure this is correctly pointing to your Plant model
+import 'edit_plant.dart'; // Import EditPlantScreen
 
-class PlantStatusScreen extends StatelessWidget {
+class PlantStatusScreen extends StatefulWidget {
   final Plant plant;
 
   PlantStatusScreen({required this.plant});
 
   @override
+  _PlantStatusScreenState createState() => _PlantStatusScreenState();
+}
+
+class _PlantStatusScreenState extends State<PlantStatusScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(plant.name),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => EditPlantScreen(plant: plant)),
-              );
-            },
-          ),
-        ],
+        title: Text(widget.plant.name), // Use plant name as the title
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Image.asset(
-                plant.iconPath, // Assuming this is a valid path
-                width: 100,
-                height: 100,
-              ),
-            ),
             Text(
-              'Watering Schedule: ${plant.wateringSchedule}',
+              'Watering Schedule: ${widget.plant.wateringSchedule}', // Use plant's watering schedule
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 10),
             Text(
-              'Next Reminder: ${plant.reminder.toString()}',
+              'Next Reminder: ${DateFormat('yyyy-MM-dd').format(widget.plant.reminder)}', // Use formatted plant's reminder date
               style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditPlantScreen(plant: widget.plant),
+                  ),
+                ).then((updatedPlant) {
+                  // Handle the returned updated plant
+                  if (updatedPlant != null) {
+                    setState(() {
+                      widget.plant.name = updatedPlant.name;
+                      widget.plant.wateringSchedule =
+                          updatedPlant.wateringSchedule;
+                      widget.plant.reminder = updatedPlant.reminder;
+                    });
+                  }
+                });
+              },
+              child: Text('Edit'),
             ),
           ],
         ),
