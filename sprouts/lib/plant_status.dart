@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'plant.dart'; // Ensure this is correctly pointing to your Plant model
 import 'edit_plant.dart'; // Import EditPlantScreen
+import 'information.dart'; // Import InformationScreen
 
 class PlantStatusScreen extends StatefulWidget {
   final Plant plant;
@@ -19,6 +20,20 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.plant.name), // Use plant name as the title
+        actions: [
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      InformationScreen(plantName: widget.plant.name),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
