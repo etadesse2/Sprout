@@ -27,24 +27,79 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Column(
-        children: <Widget>[
-          TextField(
-            controller: _usernameController,
-            decoration: InputDecoration(labelText: 'Username'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Login')),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 60, right: 60),
+          child: Center(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 230),
+                  child: Image(
+                    image: AssetImage('assets/images/leaf.png'),
+                    height: 45,
+                    width: 30,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 22.0),
+                  child: Text(
+                    'SPROUT',
+                    style: TextStyle(
+                        letterSpacing: 10,
+                        fontSize: 40,
+                        color: Color.fromARGB(255, 28, 67, 30)),
+                  ),
+                ),
+                TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Username',
+                    contentPadding: const EdgeInsets.only(left: 30),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Password',
+                    contentPadding: const EdgeInsets.only(left: 30),
+                  ),
+                  obscureText: true,
+                ),
+                SizedBox(
+                  width: 180,
+                  height: 65,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: ElevatedButton(
+                      onPressed: () => _login(context),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF134800)),
+                      child: const Text('Login',
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 128, 128, 128),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          TextField(
-            controller: _passwordController,
-            decoration: InputDecoration(labelText: 'Password'),
-            obscureText: true,
-          ),
-          ElevatedButton(
-            onPressed: () => _login(context),
-            child: const Text('Login'),
-          ),
-        ],
+        ),
       ),
     );
   }
