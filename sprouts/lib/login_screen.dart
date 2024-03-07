@@ -18,10 +18,12 @@ class LoginScreen extends StatelessWidget {
         _passwordController.text == storedPassword) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // HomeScreen
+        MaterialPageRoute(
+            builder: (context) => const HomeScreen()), // HomeScreen
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Incorrect username or password')));
           const SnackBar(content: Text('Incorrect username or password')));
     }
   }

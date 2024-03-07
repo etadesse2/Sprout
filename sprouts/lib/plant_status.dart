@@ -8,7 +8,7 @@ import 'information.dart'; // Import InformationScreen
 class PlantStatusScreen extends StatefulWidget {
   final Plant plant;
 
-  PlantStatusScreen({required this.plant});
+  const PlantStatusScreen({required this.plant});
 
   @override
   _PlantStatusScreenState createState() => _PlantStatusScreenState();
@@ -22,7 +22,7 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
         title: Text(widget.plant.name), // Use plant name as the title
         actions: [
           IconButton(
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
             onPressed: () {
               Navigator.push(
                 context,
@@ -42,14 +42,14 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
           children: [
             Text(
               'Watering Schedule: ${widget.plant.wateringSchedule}', // Use plant's watering schedule
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Next Reminder: ${DateFormat('yyyy-MM-dd').format(widget.plant.reminder)}', // Use formatted plant's reminder date
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -69,7 +69,7 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
                   }
                 });
               },
-              child: Text('Edit'),
+              child: const Text('Edit'),
             ),
           ],
         ),

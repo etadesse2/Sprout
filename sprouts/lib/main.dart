@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'welcome_screen.dart'; // Make sure to create and import WelcomeScreen
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // ignore: use_key_in_widget_constructors
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WelcomeScreen(), // Set WelcomeScreen as the initial screen
+      home: const WelcomeScreen(), // Set WelcomeScreen as the initial screen
     );
   }
 }
