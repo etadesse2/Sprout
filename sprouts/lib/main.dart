@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart'; // Make sure to create and import WelcomeScreen
+import 'package:sprouts/login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WelcomeScreen(), // Set WelcomeScreen as the initial screen
+      home: LoginScreen(),
     );
   }
 }
