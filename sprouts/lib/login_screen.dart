@@ -17,11 +17,12 @@ class LoginScreen extends StatelessWidget {
         _passwordController.text == storedPassword) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // HomeScreen
+        MaterialPageRoute(
+            builder: (context) => const HomeScreen()), // HomeScreen
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Incorrect username or password')));
+          const SnackBar(content: Text('Incorrect username or password')));
     }
   }
 
@@ -29,7 +30,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Login')),
+        appBar: AppBar(title: const Text('Login')),
         body: Padding(
           padding: const EdgeInsets.only(left: 60, right: 60),
           child: Center(
@@ -55,10 +56,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextField(
                   controller: _usernameController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
                     hintText: 'Username',
-                    contentPadding: const EdgeInsets.only(left: 30),
+                    contentPadding: EdgeInsets.only(left: 30),
                   ),
                 ),
                 const SizedBox(
@@ -66,10 +67,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextField(
                   controller: _passwordController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
                     hintText: 'Password',
-                    contentPadding: const EdgeInsets.only(left: 30),
+                    contentPadding: EdgeInsets.only(left: 30),
                   ),
                   obscureText: true,
                 ),
