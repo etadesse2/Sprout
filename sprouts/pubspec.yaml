@@ -32,9 +32,9 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.0.13
   intl: any
+  eva_icons_flutter: ^3.1.0 # Add Eva Icons Flutter dependency here
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # Your existing dependencies here
   cupertino_icons: ^1.0.6
   day_picker: ^2.2.0
   numberpicker: ^2.1.2

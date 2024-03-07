@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sprouts/registration_screen.dart';
-import 'home_screen.dart'; // Assuming this is your HomeScreen; rename as necessary
+import 'package:sprouts/home_screen.dart'; // Import HomeScreen
+import 'registration_screen.dart'; // Import RegistrationScreen
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -18,11 +18,15 @@ class LoginScreen extends StatelessWidget {
         _passwordController.text == storedPassword) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // HomeScreen
+        MaterialPageRoute(
+          builder: (context) =>
+              const HomeScreen(), // Navigate directly to HomeScreen
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Incorrect username or password')));
+      const SnackBar(content: Text('Incorrect username or password'));
     }
   }
 

@@ -84,7 +84,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
             ),
             ListTile(
               title: Text('Reminder: ${_dateFormat.format(_reminder)}'),
-              trailing: Icon(Icons.calendar_today),
+              trailing: const Icon(Icons.calendar_today),
               onTap: () async {
                 final DateTime? picked = await showDatePicker(
                   context: context,

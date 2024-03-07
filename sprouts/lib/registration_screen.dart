@@ -7,13 +7,14 @@ class RegistrationScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  RegistrationScreen({Key? key}) : super(key: key);
+  RegistrationScreen({super.key});
 
   Future<void> _register(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', _usernameController.text);
     await prefs.setString('password', _passwordController.text);
     Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(builder: (context) => HomeScreen()),
     );
@@ -22,6 +23,7 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 60, right: 60),
@@ -168,6 +170,25 @@ class RegistrationScreen extends StatelessWidget {
             ),
           ),
         ),
+=======
+      appBar: AppBar(title: const Text('Register')),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            controller: _usernameController,
+            decoration: const InputDecoration(labelText: 'Username'),
+          ),
+          TextField(
+            controller: _passwordController,
+            decoration: const InputDecoration(labelText: 'Password'),
+            obscureText: true,
+          ),
+          ElevatedButton(
+            onPressed: () => _register(context),
+            child: const Text('Register'),
+          ),
+        ],
+>>>>>>> 977ee931712002b05d03daf542a5618c3d2550c8
       ),
     );
   }
