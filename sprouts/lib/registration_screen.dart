@@ -15,7 +15,7 @@ class RegistrationScreen extends StatelessWidget {
     await prefs.setString('password', _passwordController.text);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 
