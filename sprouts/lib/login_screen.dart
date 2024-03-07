@@ -29,7 +29,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Login')),
         body: Padding(
           padding: const EdgeInsets.only(left: 60, right: 60),
           child: Center(
