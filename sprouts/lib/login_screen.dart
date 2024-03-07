@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Incorrect username or password')));
-          const SnackBar(content: Text('Incorrect username or password')));
+      const SnackBar(content: Text('Incorrect username or password'));
     }
   }
 
