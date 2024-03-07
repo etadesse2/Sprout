@@ -58,15 +58,21 @@ class LoginScreen extends StatelessWidget {
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 28, 67, 30))),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                      border: const OutlineInputBorder(),
                       hintText: 'Username',
                       contentPadding: const EdgeInsets.only(left: 30),
+                      hintStyle: const TextStyle(
+                          fontSize: 14, color: Color(0xFFB8B8B8)),
+                      filled: true,
+                      fillColor: const Color(0xFFF2F2F2),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              const BorderSide(color: Color(0xFF134800))),
                     ),
                   ),
                   const SizedBox(
@@ -75,17 +81,22 @@ class LoginScreen extends StatelessWidget {
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 28, 67, 30))),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                      border: const OutlineInputBorder(),
                       hintText: 'Password',
                       contentPadding: const EdgeInsets.only(left: 30),
+                      hintStyle: const TextStyle(
+                          fontSize: 14, color: Color(0xFFB8B8B8)),
+                      filled: true,
+                      fillColor: const Color(0xFFF2F2F2),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              const BorderSide(color: Color(0xFF134800))),
                     ),
-                    obscureText: true,
                   ),
                   SizedBox(
                     width: 180,
