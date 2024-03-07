@@ -60,7 +60,7 @@ class RegistrationScreen extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: Color(0xFF134800))),
                   ),
                 ),
@@ -81,7 +81,7 @@ class RegistrationScreen extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: Color(0xFF134800))),
                   ),
                 ),
@@ -102,7 +102,7 @@ class RegistrationScreen extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: Color(0xFF134800))),
                   ),
                 ),
@@ -124,7 +124,7 @@ class RegistrationScreen extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: Color(0xFF134800))),
                   ),
                 ),
@@ -146,7 +146,7 @@ class RegistrationScreen extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: Color(0xFF134800))),
                   ),
                 ),
