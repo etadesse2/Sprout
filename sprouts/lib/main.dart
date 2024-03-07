@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart'; // Make sure to create and import WelcomeScreen
+import 'package:sprouts/login_screen.dart'; // Import the LoginScreen
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const MyApp({Key? key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Sprouts',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const WelcomeScreen(), // Set WelcomeScreen as the initial screen
+      home: LoginScreen(), // Set LoginScreen as the initial screen
     );
   }
 }
