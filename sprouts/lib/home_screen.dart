@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart'; // Import Eva Icons package
-import 'add_plant.dart';
 import 'plant.dart';
 import 'plant_status.dart';
+import 'add_plant.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomeScreen(),
+    );
+  }
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Plants'),
-        automaticallyImplyLeading: false, // Disable the back button
+        automaticallyImplyLeading: false,
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -51,23 +63,65 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-            child: Card(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(plants[index].name),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Display the circular image button
+                CircularImageButton(
+                  imagePath: plants[index].iconPath,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PlantStatusScreen(plant: plants[index]),
+                      ),
+                    );
+                  },
+                ),
+
+                // Display the plant name
+                Text(
+                  plants[index].enteredPlantName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateAndDisplaySelection(context),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 28, 67, 30),
         child: const Icon(
-          EvaIcons.plus,
-        ), // Using Eva Icons for the FloatingActionButton
+          Icons.add,
+        ),
+      ),
+    );
+  }
+}
+
+class CircularImageButton extends StatelessWidget {
+  final String imagePath;
+  final VoidCallback onPressed;
+
+  const CircularImageButton({
+    required this.imagePath,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: ClipOval(
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: 100.0,
+          height: 100.0,
+        ),
       ),
     );
   }

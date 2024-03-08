@@ -65,6 +65,8 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
                       widget.plant.wateringSchedule =
                           updatedPlant.wateringSchedule;
                       widget.plant.reminder = updatedPlant.reminder;
+                      widget.plant.enteredPlantName = updatedPlant
+                          .enteredPlantName; // Update the enteredPlantName
                     });
                   }
                 });

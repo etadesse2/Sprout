@@ -1,11 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'plant.dart';
-
-import 'package:flutter/src/material/dropdown.dart';
-import 'package:day_picker/day_picker.dart';
-import 'package:flutter/widgets.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 class AddPlantScreen extends StatefulWidget {
   @override
@@ -15,16 +9,17 @@ class AddPlantScreen extends StatefulWidget {
 class _AddPlantScreenState extends State<AddPlantScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _selectedPlant;
+  String _enteredPlantName =
+      ''; // Use this variable to store the entered plant name
   String _wateringSchedule = '';
   DateTime _selectedDate = DateTime.now();
 
-  // Update with actual plant names and their icons
   final Map<String, String> plantNamesAndIcons = {
-    "Aloe Vera": "icons/aloe_vera.png",
-    "Snake Plant": "icons/snake_plant.png",
-    "Fiddle Leaf Fig": "icons/fiddle_leaf_fig.png",
-    // Add more plants and their icon paths
+    "Tulip": "assets/images/tulip.png",
+    "Peony": "assets/images/peony.png",
   };
+
+  TextEditingController _plantNameController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -40,16 +35,6 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     }
   }
 
-  String dropdownvalue = 'Select Plant';
-  bool? value;
-  void daySelect() {
-    final String dayName;
-    final String dayKey;
-  }
-
-  var hour = 0;
-  var minute = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +43,10 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
         title: const Text(
           'SPROUT',
           style: TextStyle(
-              letterSpacing: 10,
-              fontSize: 40,
-              color: Color.fromARGB(255, 28, 67, 30)),
+            letterSpacing: 10,
+            fontSize: 40,
+            color: Color.fromARGB(255, 28, 67, 30),
+          ),
         ),
         centerTitle: true,
         toolbarHeight: 120,
@@ -70,63 +56,25 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
         child: ListView(
           padding: EdgeInsets.all(8.0),
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 60.0, right: 60.0, top: 15),
               child: TextField(
+                controller: _plantNameController,
                 decoration: InputDecoration(
-                    hintText: 'Enter Plant Name',
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 28, 67, 30)))),
+                  hintText: 'Enter Plant Name',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 28, 67, 30),
+                    ),
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _enteredPlantName = value;
+                  });
+                },
               ),
             ),
-            DropdownButton<String>(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                value: dropdownvalue,
-                items: [
-                  const DropdownMenuItem(
-                    value: 'Select Plant',
-                    child: Text('Select Plant',
-                        style: TextStyle(color: Color(0xFF676767))),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Tulip',
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 40,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Image.asset('assets/images/tulip.png'),
-                          ),
-                        ),
-                        const Text('Tulip',
-                            style: TextStyle(color: Color(0xFF676767))),
-                      ],
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Peony',
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 40,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Image.asset('assets/images/peony.png'),
-                          ),
-                        ),
-                        const Text('Peony',
-                            style: TextStyle(color: Color(0xFF676767))),
-                      ],
-                    ),
-                  ),
-                ],
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownvalue = newValue!;
-                  });
-                }),
             DropdownButtonFormField<String>(
               value: _selectedPlant,
               hint: Text('Select a Plant'),
@@ -139,13 +87,28 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 40,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(plantNamesAndIcons[value]!),
+                        ),
+                      ),
+                      Text(value),
+                    ],
+                  ),
                 );
               }).toList(),
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Watering Schedule'),
-              onChanged: (value) => _wateringSchedule = value,
+              onChanged: (value) {
+                setState(() {
+                  _wateringSchedule = value;
+                });
+              },
             ),
             ListTile(
               title: Text('Select Reminder Date'),
@@ -159,27 +122,27 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 child: FloatingActionButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Assuming icon selection is based on plant name
-                      String iconPath =
-                          plantNamesAndIcons[_selectedPlant] ?? '';
                       Plant newPlant = Plant(
-                        name: _selectedPlant ?? 'Unknown',
-                        iconPath: iconPath,
+                        name: _selectedPlant ?? _enteredPlantName,
+                        iconPath: plantNamesAndIcons[_selectedPlant] ?? '',
                         wateringSchedule: _wateringSchedule,
                         reminder: _selectedDate,
+                        enteredPlantName: _enteredPlantName,
                       );
                       Navigator.pop(context, newPlant);
                     }
                   },
                   backgroundColor: const Color.fromARGB(255, 28, 67, 30),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                   child: const Text(
                     'Add Plant',
                     style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w400),
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
@@ -192,13 +155,15 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   onPressed: null,
                   backgroundColor: const Color(0xFFF5F5F5),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                   child: const Text(
                     'Cancel',
                     style: TextStyle(
-                        color: Color(0xFFB8B8B8),
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w400),
+                      color: Color(0xFFB8B8B8),
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
@@ -209,6 +174,18 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // void main() {
