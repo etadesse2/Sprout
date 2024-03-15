@@ -117,19 +117,24 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
               children: [
                 const SizedBox(width: 10),
                 Container(
-                  color: Colors.grey,
-                  height: 50,
-                  child: Wrap(
-                    spacing: 10,
-                    children: [
-                      buildDayButton('M', 'Monday'),
-                      buildDayButton('T', 'Tuesday'),
-                      buildDayButton('W', 'Wednesday'),
-                      buildDayButton('Th', 'Thursday'),
-                      buildDayButton('F', 'Friday'),
-                      buildDayButton('S', 'Saturday'),
-                      buildDayButton('Su', 'Sunday'),
-                    ],
+                  height: 60,
+                  width: 500,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Wrap(
+                      spacing: 10,
+                      children: [
+                        buildDayButton('M', 'Monday'),
+                        buildDayButton('T', 'Tuesday'),
+                        buildDayButton('W', 'Wednesday'),
+                        buildDayButton('Th', 'Thursday'),
+                        buildDayButton('F', 'Friday'),
+                        buildDayButton('S', 'Saturday'),
+                        buildDayButton('Su', 'Sunday'),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -151,7 +156,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF2F2F2),
+                          color: const Color.fromARGB(255, 248, 248, 248),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
@@ -326,7 +331,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
           side: BorderSide(
             color: selectedDays.contains(dayName)
                 ? Colors.transparent
-                : const Color(0xFF676767),
+                : Color.fromARGB(0, 103, 103, 103),
           ),
         ),
       ),
