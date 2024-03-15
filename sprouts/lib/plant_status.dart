@@ -17,6 +17,11 @@ class PlantStatusScreen extends StatefulWidget {
 class _PlantStatusScreenState extends State<PlantStatusScreen> {
   @override
   Widget build(BuildContext context) {
+    String reminderMessage = widget.plant.reminderMessage ?? '';
+    String nextReminderText = widget.plant.reminder != null
+        ? DateFormat('yyyy-MM-dd').format(widget.plant.reminder!)
+        : 'Not set';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.plant.name), // Use plant name as the title
@@ -46,9 +51,17 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Next Reminder: ${DateFormat('yyyy-MM-dd').format(widget.plant.reminder)}', // Use formatted plant's reminder date
+              'Next Reminder: $nextReminderText', // Use formatted plant's reminder date or 'Not set'
               style: const TextStyle(fontSize: 18),
             ),
+            if (reminderMessage.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  reminderMessage,
+                  style: const TextStyle(fontSize: 18, color: Colors.green),
+                ),
+              ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
@@ -68,6 +81,8 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
                       widget.plant.reminder = updatedPlant.reminder;
                       widget.plant.enteredPlantName =
                           updatedPlant.enteredPlantName;
+                      widget.plant.reminderMessage =
+                          updatedPlant.reminderMessage;
                     });
                   }
                 });
@@ -80,6 +95,9 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
     );
   }
 }
+
+  
+
 
 
 
