@@ -16,7 +16,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   int hour = 0;
   int minute = 0;
   bool isAM = true;
-  String reminderMessage = ''; // Added variable for reminder message
+  String reminderMessage = '';
 
   final Map<String, String> plantNamesAndIcons = {
     "Tulip": "assets/images/tulip.png",
@@ -26,17 +26,29 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Add Plant'),
+        backgroundColor: Colors.white,
+        title: const Text(
+          'SPROUT',
+          style: TextStyle(
+              letterSpacing: 10,
+              fontSize: 40,
+              color: Color.fromARGB(255, 28, 67, 30)),
+        ),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter Plant Name',
+                focusedBorder: UnderlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 28, 67, 30)),
+                ),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -50,10 +62,16 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color.fromARGB(255, 28, 67, 30))),
+              ),
+              dropdownColor: Colors.white,
               value: _selectedPlant,
-              hint: Text('Select a Plant'),
+              hint: const Text('Select a Plant'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please select a plant';
@@ -84,51 +102,65 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20),
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 25, bottom: 30),
+                child: SizedBox(
+                  height: 25,
+                  child: Text('Watering Schedule Time',
+                      style: TextStyle(fontSize: 18)),
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 10),
-                Wrap(
-                  spacing: 10,
-                  children: [
-                    buildDayButton('M', 'Monday'),
-                    buildDayButton('T', 'Tuesday'),
-                    buildDayButton('W', 'Wednesday'),
-                    buildDayButton('Th', 'Thursday'),
-                    buildDayButton('F', 'Friday'),
-                    buildDayButton('S', 'Saturday'),
-                    buildDayButton('Su', 'Sunday'),
-                  ],
+                const SizedBox(width: 10),
+                Container(
+                  color: Colors.grey,
+                  height: 50,
+                  child: Wrap(
+                    spacing: 10,
+                    children: [
+                      buildDayButton('M', 'Monday'),
+                      buildDayButton('T', 'Tuesday'),
+                      buildDayButton('W', 'Wednesday'),
+                      buildDayButton('Th', 'Thursday'),
+                      buildDayButton('F', 'Friday'),
+                      buildDayButton('S', 'Saturday'),
+                      buildDayButton('Su', 'Sunday'),
+                    ],
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: const Color.fromARGB(255, 255, 255, 255),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     children: [
-                      Text('Watering Schedule Time',
-                          style: TextStyle(fontSize: 18)),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFFF2F2F2),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             NumberPicker(
+                              selectedTextStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 28, 67, 30),
+                                  fontSize: 22),
                               minValue: 0,
                               maxValue: 12,
                               value: hour,
@@ -136,18 +168,24 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                                   setState(() => hour = value),
                             ),
                             NumberPicker(
+                              zeroPad: true,
+                              selectedTextStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 28, 67, 30),
+                                  fontSize: 22),
                               minValue: 0,
                               maxValue: 59,
                               value: minute,
                               onChanged: (value) =>
                                   setState(() => minute = value),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('AM'),
+                                const Text('AM'),
                                 Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 28, 67, 30),
                                   value: isAM,
                                   onChanged: (value) {
                                     setState(() {
@@ -157,12 +195,14 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('PM'),
+                                const Text('PM'),
                                 Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 28, 67, 30),
                                   value: !isAM,
                                   onChanged: (value) {
                                     setState(() {
@@ -180,27 +220,29 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            CheckboxListTile(
-              title: Text('Remind me watering times'),
-              value: _receiveReminders,
-              onChanged: (value) {
-                setState(() {
-                  _receiveReminders = value!;
-                  if (_receiveReminders) {
-                    reminderMessage =
-                        'Reminder set on ${selectedDays.join(', ')}';
-                  } else {
-                    reminderMessage = '';
-                  }
-                });
-              },
+            const SizedBox(height: 20),
+            Center(
+              child: CheckboxListTile(
+                title: const Text('Remind me watering times'),
+                value: _receiveReminders,
+                onChanged: (value) {
+                  setState(() {
+                    _receiveReminders = value!;
+                    if (_receiveReminders) {
+                      reminderMessage =
+                          'Reminder set on ${selectedDays.join(', ')}';
+                    } else {
+                      reminderMessage = '';
+                    }
+                  });
+                },
+              ),
             ),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -211,18 +253,22 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                     name: _selectedPlant ?? _enteredPlantName,
                     iconPath: plantNamesAndIcons[_selectedPlant] ?? '',
                     wateringSchedule: _generateWateringSchedule(),
-                    reminder: _receiveReminders
-                        ? DateTime.now()
-                        : null, // Nullable DateTime
+                    reminder: _receiveReminders ? DateTime.now() : null,
                     enteredPlantName: _enteredPlantName,
-                    reminderMessage:
-                        reminderMessage, // Nullable String // Nullable String
+                    reminderMessage: reminderMessage,
                   );
 
                   Navigator.pop(context, newPlant);
                 }
               },
-              child: Text(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
                 'Add Plant',
                 style: TextStyle(
                   fontSize: 20,
@@ -231,20 +277,20 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 28, 67, 30),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                minimumSize: Size(double.infinity, 50),
-              ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF5F5F5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
                 'Cancel',
                 style: TextStyle(
                   fontSize: 20,
@@ -252,13 +298,6 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   letterSpacing: 1,
                   fontWeight: FontWeight.w400,
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF5F5F5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                minimumSize: Size(double.infinity, 50),
               ),
             ),
           ],
@@ -268,7 +307,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   }
 
   Widget buildDayButton(String abbreviation, String dayName) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         setState(() {
           if (selectedDays.contains(dayName)) {
@@ -278,15 +317,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
           }
         });
       },
-      child: Text(
-        abbreviation,
-        style: TextStyle(
-          color: selectedDays.contains(dayName)
-              ? Colors.white
-              : const Color(0xFF676767),
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         backgroundColor: selectedDays.contains(dayName)
             ? const Color.fromARGB(255, 28, 67, 30)
             : Colors.transparent,
@@ -297,6 +328,14 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ? Colors.transparent
                 : const Color(0xFF676767),
           ),
+        ),
+      ),
+      child: Text(
+        abbreviation,
+        style: TextStyle(
+          color: selectedDays.contains(dayName)
+              ? Colors.white
+              : const Color(0xFF676767),
         ),
       ),
     );
