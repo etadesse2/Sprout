@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sprouts/home_screen.dart';
 import 'login_screen.dart'; // Adjust the import path as necessary
 
 class RegistrationScreen extends StatelessWidget {

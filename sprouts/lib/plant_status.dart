@@ -61,12 +61,13 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
                   // Handle the returned updated plant
                   if (updatedPlant != null) {
                     setState(() {
+                      // Update plant properties
                       widget.plant.name = updatedPlant.name;
                       widget.plant.wateringSchedule =
                           updatedPlant.wateringSchedule;
                       widget.plant.reminder = updatedPlant.reminder;
-                      widget.plant.enteredPlantName = updatedPlant
-                          .enteredPlantName; // Update the enteredPlantName
+                      widget.plant.enteredPlantName =
+                          updatedPlant.enteredPlantName;
                     });
                   }
                 });
@@ -79,6 +80,7 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
     );
   }
 }
+
 
 
 
