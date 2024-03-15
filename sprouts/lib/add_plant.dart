@@ -15,7 +15,8 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   List<String> selectedDays = [];
   int hour = 0;
   int minute = 0;
-  bool isAM = true; // Added for AM/PM selection
+  bool isAM = true;
+  String reminderMessage = ''; // Added variable for reminder message
 
   final Map<String, String> plantNamesAndIcons = {
     "Tulip": "assets/images/tulip.png",
@@ -49,8 +50,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 });
               },
             ),
-            SizedBox(height: 20), // Added for spacing
-
+            SizedBox(height: 20),
             DropdownButtonFormField<String>(
               value: _selectedPlant,
               hint: Text('Select a Plant'),
@@ -84,7 +84,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20), // Added for spacing
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -103,7 +103,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20), // Added for spacing
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -117,7 +117,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                     children: [
                       Text('Watering Schedule Time',
                           style: TextStyle(fontSize: 18)),
-                      SizedBox(height: 10), // Added for spacing
+                      SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -180,7 +180,22 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20), // Added for spacing
+            SizedBox(height: 20),
+            CheckboxListTile(
+              title: Text('Remind me watering times'),
+              value: _receiveReminders,
+              onChanged: (value) {
+                setState(() {
+                  _receiveReminders = value!;
+                  if (_receiveReminders) {
+                    reminderMessage =
+                        'Reminder set on ${selectedDays.join(', ')}';
+                  } else {
+                    reminderMessage = '';
+                  }
+                });
+              },
+            ),
           ],
         ),
       ),
@@ -196,9 +211,14 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                     name: _selectedPlant ?? _enteredPlantName,
                     iconPath: plantNamesAndIcons[_selectedPlant] ?? '',
                     wateringSchedule: _generateWateringSchedule(),
-                    reminder: DateTime.now(), // Provide a reminder date here
+                    reminder: _receiveReminders
+                        ? DateTime.now()
+                        : null, // Nullable DateTime
                     enteredPlantName: _enteredPlantName,
+                    reminderMessage:
+                        reminderMessage, // Nullable String // Nullable String
                   );
+
                   Navigator.pop(context, newPlant);
                 }
               },
@@ -216,13 +236,13 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
-                minimumSize: Size(double.infinity, 50), // Set button width
+                minimumSize: Size(double.infinity, 50),
               ),
             ),
-            SizedBox(height: 10), // Added for spacing
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context); // Cancel button functionality
+                Navigator.pop(context);
               },
               child: Text(
                 'Cancel',
@@ -238,7 +258,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
-                minimumSize: Size(double.infinity, 50), // Set button width
+                minimumSize: Size(double.infinity, 50),
               ),
             ),
           ],
@@ -285,9 +305,12 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   String _generateWateringSchedule() {
     String days = selectedDays.join(', ');
     String time = '$hour:$minute ${isAM ? 'AM' : 'PM'}';
-    return 'Water on $days at $time'; // Example format: "Water on Monday, Wednesday at 5:30 AM"
+    return 'Water on $days at $time';
   }
 }
+
+
+
 
 
 

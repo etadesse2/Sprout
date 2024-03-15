@@ -13,9 +13,9 @@ class EditPlantScreen extends StatefulWidget {
 
 class _EditPlantScreenState extends State<EditPlantScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _selectedPlant = '';
-  String _wateringSchedule = '';
-  DateTime _reminder = DateTime.now();
+  late String _selectedPlant;
+  late String _wateringSchedule;
+  late DateTime _reminder;
 
   final Map<String, String> plantNamesAndIcons = {
     "Tulip": "assets/images/tulip.png",
@@ -28,7 +28,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
     // Initialize form fields with the current plant data
     _selectedPlant = widget.plant.name;
     _wateringSchedule = widget.plant.wateringSchedule;
-    _reminder = widget.plant.reminder;
+    _reminder = widget.plant.reminder ?? DateTime.now();
   }
 
   @override
@@ -84,6 +84,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                         wateringSchedule: _wateringSchedule,
                         reminder: _reminder,
                         enteredPlantName: widget.plant.enteredPlantName,
+                        reminderMessage: '',
                       );
                       Navigator.pop(context, updatedPlant);
                     }
