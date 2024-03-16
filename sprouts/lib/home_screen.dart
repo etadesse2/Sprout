@@ -45,8 +45,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Your Plants'),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: const Text(
+          'SPROUT',
+          style: TextStyle(
+              letterSpacing: 10,
+              fontSize: 40,
+              color: Color.fromARGB(255, 28, 67, 30)),
+        ),
+        bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: Padding(
+              padding: EdgeInsets.only(left: 50.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'My Plants',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            )),
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -70,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   plant.enteredPlantName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ],
             ),
@@ -78,8 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: const Color.fromARGB(255, 28, 67, 30),
         onPressed: () => _navigateAndDisplaySelection(context),
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -97,6 +123,7 @@ class CircularImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: null,
       onTap: onPressed,
       child: ClipOval(
         child: Image.asset(
