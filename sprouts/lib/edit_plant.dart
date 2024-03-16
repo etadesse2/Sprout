@@ -53,6 +53,67 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
               color: Color.fromARGB(255, 28, 67, 30)),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  Plant updatedPlant = Plant(
+                    name: _selectedPlant,
+                    iconPath: widget.plant.iconPath,
+                    wateringSchedule: _wateringSchedule,
+                    reminder: _reminder,
+                    enteredPlantName: _enteredPlantName,
+                    reminderMessage: reminderMessage,
+                  );
+                  Navigator.pop(context, updatedPlant);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
+                'Save Changes',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF5F5F5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
+                'Remove Plant',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFFB8B8B8),
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -199,39 +260,6 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                   ),
                 ),
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 40, right: 40),
-              child: SizedBox(
-                width: 250,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Plant updatedPlant = Plant(
-                        name: _selectedPlant,
-                        iconPath: widget.plant.iconPath,
-                        wateringSchedule: _wateringSchedule,
-                        reminder: _reminder,
-                        enteredPlantName: _enteredPlantName,
-                        reminderMessage: reminderMessage,
-                      );
-                      Navigator.pop(context, updatedPlant);
-                    }
-                  },
-                  backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Text(
-                    'Update Plant',
-                    style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),
