@@ -136,7 +136,7 @@ class RegistrationScreen extends StatelessWidget {
                             if (value == null || value.isEmpty) {
                               return 'Please enter phone number';
                             }
-                            if (value.length < 10) {
+                            if (!(value.length == 10)) {
                               return 'Invalid phone number';
                             }
                             return null;
