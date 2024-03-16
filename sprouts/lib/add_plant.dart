@@ -113,35 +113,37 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ),
               ),
             ),
-            Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 60,
-                      width: 500,
-                      decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 248, 248, 248),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Center(
-                        child: Wrap(
-                          spacing: 10,
-                          children: [
-                            buildDayButton('M', 'Monday'),
-                            buildDayButton('T', 'Tuesday'),
-                            buildDayButton('W', 'Wednesday'),
-                            buildDayButton('Th', 'Thursday'),
-                            buildDayButton('F', 'Friday'),
-                            buildDayButton('S', 'Saturday'),
-                            buildDayButton('Su', 'Sunday'),
-                          ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 20, right: 20),
+              child: Center(
+                child: Container(
+                  height: 60,
+                  width: 455,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Wrap(
+                            spacing: 10,
+                            children: [
+                              buildDayButton('M', 'Monday'),
+                              buildDayButton('T', 'Tuesday'),
+                              buildDayButton('W', 'Wednesday'),
+                              buildDayButton('Th', 'Thursday'),
+                              buildDayButton('F', 'Friday'),
+                              buildDayButton('S', 'Saturday'),
+                              buildDayButton('Su', 'Sunday'),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
