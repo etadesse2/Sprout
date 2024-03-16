@@ -61,6 +61,67 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
       appBar: AppBar(
         title: const Text('Edit Plant'),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  Plant updatedPlant = Plant(
+                    name: _selectedPlant,
+                    iconPath: widget.plant.iconPath,
+                    wateringSchedule: _wateringSchedule,
+                    reminder: _reminder,
+                    enteredPlantName: _enteredPlantName,
+                    reminderMessage: reminderMessage,
+                  );
+                  Navigator.pop(context, updatedPlant);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
+                'Save Changes',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF5F5F5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
+                'Remove Plant',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFFB8B8B8),
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -135,6 +196,91 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                   ),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(width: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 248, 248, 248),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NumberPicker(
+                              selectedTextStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 28, 67, 30),
+                                  fontSize: 22),
+                              minValue: 0,
+                              maxValue: 12,
+                              value: hour,
+                              onChanged: (value) =>
+                                  setState(() => hour = value),
+                            ),
+                            NumberPicker(
+                              zeroPad: true,
+                              selectedTextStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 28, 67, 30),
+                                  fontSize: 22),
+                              minValue: 0,
+                              maxValue: 59,
+                              value: minute,
+                              onChanged: (value) =>
+                                  setState(() => minute = value),
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('AM'),
+                                Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 28, 67, 30),
+                                  value: isAM,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isAM = value!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('PM'),
+                                Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 28, 67, 30),
+                                  value: !isAM,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isAM = !value!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             ElevatedButton(
               onPressed: () {
