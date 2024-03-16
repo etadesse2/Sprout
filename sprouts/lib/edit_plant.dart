@@ -36,7 +36,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
   }
 
   Widget buildDayButton(String day) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         setState(() {
           if (selectedDays.contains(day)) {
@@ -46,10 +46,26 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
           }
         });
       },
-      child: Text(day),
-      style: ElevatedButton.styleFrom(
-        backgroundColor:
-            selectedDays.contains(day) ? Colors.green : Colors.grey,
+      style: TextButton.styleFrom(
+        backgroundColor: selectedDays.contains(day)
+            ? const Color.fromARGB(255, 28, 67, 30)
+            : Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            color: selectedDays.contains(day)
+                ? Colors.transparent
+                : const Color.fromARGB(0, 103, 103, 103),
+          ),
+        ),
+      ),
+      child: Text(
+        day,
+        style: TextStyle(
+          color: selectedDays.contains(day)
+              ? Colors.white
+              : const Color(0xFF676767),
+        ),
       ),
     );
   }
@@ -61,8 +77,16 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Edit Plant'),
+        backgroundColor: Colors.white,
+        title: const Text(
+          'SPROUT',
+          style: TextStyle(
+              letterSpacing: 10,
+              fontSize: 40,
+              color: Color.fromARGB(255, 28, 67, 30)),
+        ),
       ),
       body: Form(
         key: _formKey,
@@ -95,26 +119,39 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                 );
               }).toList(),
             ),
-            CheckboxListTile(
-              title: const Text('Receive reminders'),
-              value: _receiveReminders,
-              onChanged: (bool? value) {
-                setState(() {
-                  _receiveReminders = value!;
-                });
-              },
-            ),
-            Wrap(
-              spacing: 10,
-              children: [
-                buildDayButton('M'),
-                buildDayButton('T'),
-                buildDayButton('W'),
-                buildDayButton('Th'),
-                buildDayButton('F'),
-                buildDayButton('S'),
-                buildDayButton('Su'),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 20, right: 20),
+              child: Center(
+                child: Container(
+                  height: 60,
+                  width: 455,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Wrap(
+                            spacing: 10,
+                            children: [
+                              buildDayButton('M'),
+                              buildDayButton('T'),
+                              buildDayButton('W'),
+                              buildDayButton('Th'),
+                              buildDayButton('F'),
+                              buildDayButton('S'),
+                              buildDayButton('Su'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -200,6 +237,17 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                   ),
                 ),
               ],
+            ),
+            CheckboxListTile(
+              activeColor: const Color.fromARGB(255, 28, 67, 30),
+              controlAffinity: ListTileControlAffinity.leading,
+              title: const Text('Receive reminders'),
+              value: _receiveReminders,
+              onChanged: (bool? value) {
+                setState(() {
+                  _receiveReminders = value!;
+                });
+              },
             ),
             ElevatedButton(
               onPressed: () {
