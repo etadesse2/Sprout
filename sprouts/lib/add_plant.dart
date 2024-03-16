@@ -107,8 +107,8 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 padding: EdgeInsets.only(top: 25, bottom: 30),
                 child: SizedBox(
                   height: 25,
-                  child: Text('Watering Schedule Time',
-                      style: TextStyle(fontSize: 18)),
+                  child:
+                      Text('Watering Schedule', style: TextStyle(fontSize: 18)),
                 ),
               ),
             ),
