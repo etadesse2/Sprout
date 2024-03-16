@@ -17,7 +17,7 @@ class _InformationScreenState extends State<InformationScreen> {
   Widget _buildPlantInfo(String plantName) {
     switch (plantName) {
       case 'Plant 1':
-        return Info(
+        return const Info(
           plantName: 'Peony',
           imgPath: 'assets/images/peony.png',
           generalInfo:
@@ -44,7 +44,7 @@ class _InformationScreenState extends State<InformationScreen> {
               'Stem Rots: Several fungal pathogens can cause stem rots in peonies, resulting in dark, water-soaked lesions on stems and eventual wilting and collapse of affected stems.',
         );
       case 'Plant 2':
-        return Info(
+        return const Info(
           plantName: 'Tulip',
           imgPath: 'assets/images/tulip.png',
           generalInfo:
