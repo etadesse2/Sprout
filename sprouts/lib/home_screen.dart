@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
-import 'plant.dart';
-import 'plant_status.dart';
 import 'add_plant.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
-    );
-  }
-}
+import 'plant_status.dart';
+import 'plant.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,12 +26,27 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _navigateToPlantStatusScreen(
+      BuildContext context, Plant selectedPlant, int index) async {
+    final updatedPlant = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PlantStatusScreen(selectedPlant: selectedPlant),
+      ),
+    );
+
+    if (updatedPlant != null) {
+      setState(() {
+        plants[index] = updatedPlant as Plant;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Plants'),
-        automaticallyImplyLeading: false,
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -54,36 +56,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         itemCount: plants.length,
         itemBuilder: (context, index) {
+          final plant = plants[index];
           return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      PlantScreen(), // Navigate to PlantScreen
-                ),
-              );
-            },
+            onTap: () => _navigateToPlantStatusScreen(context, plant, index),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // Display the circular image button
                 CircularImageButton(
-                  imagePath: plants[index].iconPath,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PlantScreen(), // Navigate to PlantScreen
-                      ),
-                    );
-                  },
+                  imagePath: plant.iconPath,
+                  onPressed: () =>
+                      _navigateToPlantStatusScreen(context, plant, index),
                 ),
-
-                // Display the plant name
                 Text(
-                  plants[index].enteredPlantName,
+                  plant.enteredPlantName,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18),
                 ),
@@ -94,10 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateAndDisplaySelection(context),
-        backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-        child: const Icon(
-          Icons.add,
-        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -119,9 +101,9 @@ class CircularImageButton extends StatelessWidget {
       child: ClipOval(
         child: Image.asset(
           imagePath,
-          fit: BoxFit.cover,
           width: 100.0,
           height: 100.0,
+          fit: BoxFit.cover,
         ),
       ),
     );

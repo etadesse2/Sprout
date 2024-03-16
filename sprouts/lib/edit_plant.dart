@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'plant.dart'; // Ensure this is correctly pointing to your Plant model
+import 'plant.dart';
 
 class EditPlantScreen extends StatefulWidget {
   final Plant plant;
@@ -14,16 +13,13 @@ class EditPlantScreen extends StatefulWidget {
 
 class _EditPlantScreenState extends State<EditPlantScreen> {
   final _formKey = GlobalKey<FormState>();
-  late String _selectedPlant;
-  late String _wateringSchedule;
-  late DateTime _reminder;
   String _enteredPlantName = '';
+  String? _selectedPlantType;
   bool _receiveReminders = false;
   List<String> selectedDays = [];
   int hour = 0;
   int minute = 0;
   bool isAM = true;
-  String reminderMessage = '';
 
   final Map<String, String> plantNamesAndIcons = {
     "Tulip": "assets/images/tulip.png",
@@ -33,25 +29,37 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize form fields with the current plant data
-    _selectedPlant = widget.plant.name;
-    _wateringSchedule = widget.plant.wateringSchedule;
-    _reminder = widget.plant.reminder ?? DateTime.now();
+    _enteredPlantName = widget.plant.enteredPlantName;
+    _selectedPlantType = widget
+        .plant.plantType; // This should match the key in plantNamesAndIcons
+    _receiveReminders = widget.plant.reminder != null;
+    // Initialize other fields...
+  }
+
+  Widget buildDayButton(String day) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          if (selectedDays.contains(day)) {
+            selectedDays.remove(day);
+          } else {
+            selectedDays.add(day);
+          }
+        });
+      },
+      child: Text(day),
+      style: ElevatedButton.styleFrom(
+        backgroundColor:
+            selectedDays.contains(day) ? Colors.green : Colors.grey,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'SPROUT',
-          style: TextStyle(
-              letterSpacing: 10,
-              fontSize: 40,
-              color: Color.fromARGB(255, 28, 67, 30)),
-        ),
+        title: const Text('Edit Plant'),
       ),
       body: Form(
         key: _formKey,
@@ -59,7 +67,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
           padding: const EdgeInsets.all(8.0),
           children: [
             TextFormField(
-              initialValue: _selectedPlant,
+              initialValue: _enteredPlantName,
               decoration: const InputDecoration(labelText: 'Plant Name'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -67,19 +75,31 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                 }
                 return null;
               },
-              onChanged: (value) {
+              onChanged: (value) => _enteredPlantName = value,
+            ),
+            DropdownButtonFormField<String>(
+              value: _selectedPlantType,
+              hint: const Text('Select a plant type'),
+              onChanged: (newValue) {
                 setState(() {
-                  _selectedPlant = value;
+                  _selectedPlantType = newValue;
                 });
               },
+              items: plantNamesAndIcons.keys.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            const SizedBox(height: 25),
-            const Center(child: Text('Current Watering Schedule')),
-            Center(
-              child: Text(
-                _wateringSchedule,
-                style: const TextStyle(fontSize: 18),
-              ),
+            CheckboxListTile(
+              title: const Text('Receive reminders'),
+              value: _receiveReminders,
+              onChanged: (bool? value) {
+                setState(() {
+                  _receiveReminders = value!;
+                });
+              },
             ),
             const Center(
               child: Padding(
@@ -97,192 +117,46 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                 height: 60,
                 width: 500,
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 248, 248, 248),
-                    borderRadius: BorderRadius.circular(20)),
+                  color: const Color.fromARGB(255, 248, 248, 248),
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Center(
                   child: Wrap(
                     spacing: 10,
                     children: [
-                      buildDayButton('M', 'Monday'),
-                      buildDayButton('T', 'Tuesday'),
-                      buildDayButton('W', 'Wednesday'),
-                      buildDayButton('Th', 'Thursday'),
-                      buildDayButton('F', 'Friday'),
-                      buildDayButton('S', 'Saturday'),
-                      buildDayButton('Su', 'Sunday'),
+                      buildDayButton('M'),
+                      buildDayButton('T'),
+                      buildDayButton('W'),
+                      buildDayButton('Th'),
+                      buildDayButton('F'),
+                      buildDayButton('S'),
+                      buildDayButton('Su'),
                     ],
                   ),
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(width: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 248, 248, 248),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            NumberPicker(
-                              selectedTextStyle: const TextStyle(
-                                  color: Color.fromARGB(255, 28, 67, 30),
-                                  fontSize: 22),
-                              minValue: 0,
-                              maxValue: 12,
-                              value: hour,
-                              onChanged: (value) =>
-                                  setState(() => hour = value),
-                            ),
-                            NumberPicker(
-                              zeroPad: true,
-                              selectedTextStyle: const TextStyle(
-                                  color: Color.fromARGB(255, 28, 67, 30),
-                                  fontSize: 22),
-                              minValue: 0,
-                              maxValue: 59,
-                              value: minute,
-                              onChanged: (value) =>
-                                  setState(() => minute = value),
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text('AM'),
-                                Checkbox(
-                                  activeColor:
-                                      const Color.fromARGB(255, 28, 67, 30),
-                                  value: isAM,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isAM = value!;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text('PM'),
-                                Checkbox(
-                                  activeColor:
-                                      const Color.fromARGB(255, 28, 67, 30),
-                                  value: !isAM,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isAM = !value!;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 40, right: 40),
-              child: SizedBox(
-                width: 250,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Plant updatedPlant = Plant(
-                        name: _selectedPlant,
-                        iconPath: widget.plant.iconPath,
-                        wateringSchedule: _wateringSchedule,
-                        reminder: _reminder,
-                        enteredPlantName: _enteredPlantName,
-                        reminderMessage: reminderMessage,
-                      );
-                      Navigator.pop(context, updatedPlant);
-                    }
-                  },
-                  backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Text(
-                    'Update Plant',
-                    style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  Plant updatedPlant = Plant(
+                    name: _enteredPlantName,
+                    iconPath: plantNamesAndIcons[_selectedPlantType] ??
+                        widget.plant
+                            .iconPath, // Ensure this updates based on selection
+                    wateringSchedule:
+                        'Every ${selectedDays.join(", ")} at $hour:$minute',
+                    reminder: _receiveReminders ? DateTime.now() : null,
+                    enteredPlantName: _enteredPlantName,
+                    reminderMessage: widget.plant.reminderMessage,
+                    plantType: _selectedPlantType ?? widget.plant.plantType,
+                  );
+                  Navigator.pop(context, updatedPlant);
+                }
+              },
+              child: const Text('Update Plant'),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _reminder,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != _reminder) {
-      setState(() {
-        _reminder = picked;
-      });
-    }
-  }
-
-  buildDayButton(String abbreviation, String dayName) {
-    return TextButton(
-      onPressed: () {
-        setState(() {
-          if (selectedDays.contains(dayName)) {
-            selectedDays.remove(dayName);
-          } else {
-            selectedDays.add(dayName);
-          }
-        });
-      },
-      style: TextButton.styleFrom(
-        backgroundColor: selectedDays.contains(dayName)
-            ? const Color.fromARGB(255, 28, 67, 30)
-            : Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(
-            color: selectedDays.contains(dayName)
-                ? Colors.transparent
-                : Color.fromARGB(0, 103, 103, 103),
-          ),
-        ),
-      ),
-      child: Text(
-        abbreviation,
-        style: TextStyle(
-          color: selectedDays.contains(dayName)
-              ? Colors.white
-              : const Color(0xFF676767),
         ),
       ),
     );
