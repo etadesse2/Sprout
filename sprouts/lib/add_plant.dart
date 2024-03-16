@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'plant.dart';
 
@@ -112,32 +113,37 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(width: 10),
-                Container(
-                  height: 60,
-                  width: 500,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 248, 248, 248),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: Wrap(
-                      spacing: 10,
-                      children: [
-                        buildDayButton('M', 'Monday'),
-                        buildDayButton('T', 'Tuesday'),
-                        buildDayButton('W', 'Wednesday'),
-                        buildDayButton('Th', 'Thursday'),
-                        buildDayButton('F', 'Friday'),
-                        buildDayButton('S', 'Saturday'),
-                        buildDayButton('Su', 'Sunday'),
-                      ],
+            Center(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 10),
+                    Container(
+                      height: 60,
+                      width: 500,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 248, 248, 248),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: Wrap(
+                          spacing: 10,
+                          children: [
+                            buildDayButton('M', 'Monday'),
+                            buildDayButton('T', 'Tuesday'),
+                            buildDayButton('W', 'Wednesday'),
+                            buildDayButton('Th', 'Thursday'),
+                            buildDayButton('F', 'Friday'),
+                            buildDayButton('S', 'Saturday'),
+                            buildDayButton('Su', 'Sunday'),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -227,20 +233,25 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             ),
             const SizedBox(height: 20),
             Center(
-              child: CheckboxListTile(
-                title: const Text('Remind me watering times'),
-                value: _receiveReminders,
-                onChanged: (value) {
-                  setState(() {
-                    _receiveReminders = value!;
-                    if (_receiveReminders) {
-                      reminderMessage =
-                          'Reminder set on ${selectedDays.join(', ')}';
-                    } else {
-                      reminderMessage = '';
-                    }
-                  });
-                },
+              child: Center(
+                child: CheckboxListTile(
+                  title: const Center(child: Text('Remind me watering times')),
+                  value: _receiveReminders,
+                  activeColor: const Color.fromARGB(255, 28, 67, 30),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding: EdgeInsets.zero,
+                  onChanged: (value) {
+                    setState(() {
+                      _receiveReminders = value!;
+                      if (_receiveReminders) {
+                        reminderMessage =
+                            'Reminder set on ${selectedDays.join(', ')}';
+                      } else {
+                        reminderMessage = '';
+                      }
+                    });
+                  },
+                ),
               ),
             ),
           ],
@@ -331,7 +342,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
           side: BorderSide(
             color: selectedDays.contains(dayName)
                 ? Colors.transparent
-                : Color.fromARGB(0, 103, 103, 103),
+                : const Color.fromARGB(0, 103, 103, 103),
           ),
         ),
       ),
@@ -348,7 +359,9 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   String _generateWateringSchedule() {
     String days = selectedDays.join(', ');
-    String time = '$hour:$minute ${isAM ? 'AM' : 'PM'}';
+    String time =
+        '$hour:${minute < 10 ? '0$minute' : '$minute'} ${isAM ? 'AM' : 'PM'}';
+    //String time = '$hour:$minute ${isAM ? 'AM' : 'PM'}';
     return 'Water on $days at $time';
   }
 }
