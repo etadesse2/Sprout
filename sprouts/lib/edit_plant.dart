@@ -29,11 +29,10 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
   @override
   void initState() {
     super.initState();
-    _enteredPlantName = widget.plant.enteredPlantName;
-    _selectedPlantType = widget
-        .plant.plantType; // This should match the key in plantNamesAndIcons
+    _enteredPlantName = widget.plant.name;
+    _selectedPlantType = widget.plant.plantType;
     _receiveReminders = widget.plant.reminder != null;
-    // Initialize other fields...
+    // Assuming your Plant class has a method to parse the watering schedule to get hour, minute, isAM, and selectedDays
   }
 
   Widget buildDayButton(String day) {
@@ -55,72 +54,15 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
     );
   }
 
+  String _generateWateringSchedule() {
+    return 'Every ${selectedDays.join(", ")} at ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} ${isAM ? "AM" : "PM"}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Plant'),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  Plant updatedPlant = Plant(
-                    name: _selectedPlant,
-                    iconPath: widget.plant.iconPath,
-                    wateringSchedule: _wateringSchedule,
-                    reminder: _reminder,
-                    enteredPlantName: _enteredPlantName,
-                    reminderMessage: reminderMessage,
-                  );
-                  Navigator.pop(context, updatedPlant);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              child: const Text(
-                'Save Changes',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, null);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF5F5F5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              child: const Text(
-                'Remove Plant',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFFB8B8B8),
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
       body: Form(
         key: _formKey,
@@ -162,40 +104,17 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                 });
               },
             ),
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 25, bottom: 30),
-                child: SizedBox(
-                  height: 25,
-                  child: Text('Edit Watering Schedule',
-                      style: TextStyle(fontSize: 18)),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 80.0, right: 80),
-              child: Container(
-                height: 60,
-                width: 500,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 248, 248, 248),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Wrap(
-                    spacing: 10,
-                    children: [
-                      buildDayButton('M'),
-                      buildDayButton('T'),
-                      buildDayButton('W'),
-                      buildDayButton('Th'),
-                      buildDayButton('F'),
-                      buildDayButton('S'),
-                      buildDayButton('Su'),
-                    ],
-                  ),
-                ),
-              ),
+            Wrap(
+              spacing: 10,
+              children: [
+                buildDayButton('M'),
+                buildDayButton('T'),
+                buildDayButton('W'),
+                buildDayButton('Th'),
+                buildDayButton('F'),
+                buildDayButton('S'),
+                buildDayButton('Su'),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -285,22 +204,65 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  String updatedIconPath =
+                      plantNamesAndIcons[_selectedPlantType] ??
+                          widget.plant.iconPath;
                   Plant updatedPlant = Plant(
-                    name: _enteredPlantName,
-                    iconPath: plantNamesAndIcons[_selectedPlantType] ??
-                        widget.plant
-                            .iconPath, // Ensure this updates based on selection
-                    wateringSchedule:
-                        'Every ${selectedDays.join(", ")} at $hour:$minute',
-                    reminder: _receiveReminders ? DateTime.now() : null,
+                    name:
+                        _enteredPlantName, // or some other variable if `name` is different from `enteredPlantName`
+                    iconPath: updatedIconPath,
+                    wateringSchedule: _generateWateringSchedule(),
+                    reminder: _receiveReminders
+                        ? DateTime.now()
+                        : widget.plant.reminder,
                     enteredPlantName: _enteredPlantName,
-                    reminderMessage: widget.plant.reminderMessage,
-                    plantType: _selectedPlantType ?? widget.plant.plantType,
+                    reminderMessage: widget.plant
+                        .reminderMessage, // or some other logic for setting reminderMessage
+                    plantType: _selectedPlantType ??
+                        widget.plant
+                            .plantType, // or some other logic for plantType
                   );
+
                   Navigator.pop(context, updatedPlant);
                 }
               },
-              child: const Text('Update Plant'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text(
+                'Save Changes',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF5F5F5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFFB8B8B8),
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           ],
         ),
