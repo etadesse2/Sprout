@@ -67,6 +67,23 @@ class _PlantScreenState extends State<PlantScreen> {
   ];
 
   int selectedIndex = 0;
+  int screenIndex = 0;
+
+  void switchScreen(int index) {
+    setState(() {
+      screenIndex = index;
+    });
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InformationScreen(
+            plantName: plants[selectedIndex].name,
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,37 +171,28 @@ class _PlantScreenState extends State<PlantScreen> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => InformationScreen(
-                            plantName: plants[selectedIndex].name,
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                    child: const Text(
-                      'Info',
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: screenIndex,
+        selectedItemColor: const Color.fromARGB(255, 28, 67, 30),
+        unselectedItemColor: Colors.grey,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: SizedBox(
+                width: 16, child: Image.asset('assets/images/leaf.png')),
+            label: 'Plant',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.info_outline_rounded),
+            label: 'Info',
+          ),
+        ],
+        onTap: switchScreen,
       ),
     );
   }
