@@ -21,9 +21,10 @@ class MainApp extends StatelessWidget {
           title: const Text(
             'SPROUT',
             style: TextStyle(
-                letterSpacing: 10,
-                fontSize: 40,
-                color: Color.fromARGB(255, 28, 67, 30)),
+              letterSpacing: 10,
+              fontSize: 40,
+              color: Color.fromARGB(255, 28, 67, 30),
+            ),
           ),
           centerTitle: true,
           toolbarHeight: 120,
@@ -45,6 +46,28 @@ class _PlantScreenState extends State<PlantScreen> {
   String wateringSchedule = 'Water every day';
   String reminderMessage = 'Reminder message';
 
+  List<Plant> plants = [
+    Plant(
+      name: 'Plant 1',
+      iconPath: 'assets/images/peony.png',
+      wateringSchedule: 'Every day',
+      reminder: DateTime.now(),
+      enteredPlantName: 'Plant 1',
+      reminderMessage: 'Reminder message for Plant 1',
+    ),
+    Plant(
+      name: 'Plant 2',
+      iconPath: 'assets/images/tulip.png',
+      wateringSchedule: 'Every other day',
+      reminder: DateTime.now(),
+      enteredPlantName: 'Plant 2',
+      reminderMessage: 'Reminder message for Plant 2',
+    ),
+    // Add more plant objects as needed
+  ];
+
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +76,13 @@ class _PlantScreenState extends State<PlantScreen> {
         child: Column(
           children: [
             SizedBox(
-                width: 120,
-                height: 120,
-                child: Image.asset('assets/images/peony.png')),
+              width: 120,
+              height: 120,
+              child: Image.asset(plants[selectedIndex].iconPath),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
-              child: Text('Plant 1'),
+              child: Text(plants[selectedIndex].name),
             ),
             Column(
               children: [
@@ -94,38 +118,69 @@ class _PlantScreenState extends State<PlantScreen> {
                   children: [
                     Text('Watering Schedule: $wateringSchedule'),
                     const SizedBox(height: 10),
-                    Text('Next Reminder: $reminderMessage'),
+                    Text(
+                        'Next Reminder: ${plants[selectedIndex].reminderMessage ?? reminderMessage}'),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 70.0),
-              child: SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditPlantScreen(),
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EditPlantScreen(plant: plants[selectedIndex]),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
                     ),
-                  ),
-                  child: const Text(
-                    'Edit',
-                    style: TextStyle(
+                    child: const Text(
+                      'Edit',
+                      style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
-                ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InformationScreen(
+                            plantName: plants[selectedIndex].name,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    child: const Text(
+                      'Info',
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -134,38 +189,6 @@ class _PlantScreenState extends State<PlantScreen> {
     );
   }
 }
-
-class EditPlantScreen extends StatelessWidget {
-  const EditPlantScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Plant'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Add functionality for editing the plant
-          },
-          child: const Text('Save Changes'),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-  
-
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // //import 'package:share_plus/share_plus.dart';
 
@@ -276,5 +299,4 @@ class EditPlantScreen extends StatelessWidget {
 //         ),
 //       ),
 //     );
-//   }
-// }
+//   };
