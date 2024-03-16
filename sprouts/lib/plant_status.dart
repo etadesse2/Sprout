@@ -1,93 +1,132 @@
-// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'plant.dart'; // Ensure this is correctly pointing to your Plant model
 import 'edit_plant.dart'; // Import EditPlantScreen
 import 'information.dart'; // Import InformationScreen
 
-class PlantStatusScreen extends StatefulWidget {
-  final Plant plant;
-
-  const PlantStatusScreen({required this.plant});
-
-  @override
-  _PlantStatusScreenState createState() => _PlantStatusScreenState();
+void main() {
+  runApp(const MainApp());
 }
 
-class _PlantStatusScreenState extends State<PlantStatusScreen> {
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    String reminderMessage = widget.plant.reminderMessage ?? '';
-    String nextReminderText = widget.plant.reminder != null
-        ? DateFormat('yyyy-MM-dd').format(widget.plant.reminder!)
-        : 'Not set';
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.plant.name), // Use plant name as the title
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      InformationScreen(plantName: widget.plant.name),
-                ),
-              );
-            },
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text(
+            'SPROUT',
+            style: TextStyle(
+                letterSpacing: 10,
+                fontSize: 40,
+                color: Color.fromARGB(255, 28, 67, 30)),
           ),
-        ],
+          centerTitle: true,
+          toolbarHeight: 120,
+        ),
+        body: PlantScreen(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+    );
+  }
+}
+
+class PlantScreen extends StatefulWidget {
+  const PlantScreen({Key? key}) : super(key: key);
+
+  @override
+  State<PlantScreen> createState() => _PlantScreenState();
+}
+
+class _PlantScreenState extends State<PlantScreen> {
+  String wateringSchedule = 'Water every day';
+  String reminderMessage = 'Reminder message';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Watering Schedule: ${widget.plant.wateringSchedule}', // Use plant's watering schedule
-              style: const TextStyle(fontSize: 18),
+            SizedBox(
+                width: 120,
+                height: 120,
+                child: Image.asset('assets/images/peony.png')),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text('Plant 1'),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Next Reminder: $nextReminderText', // Use formatted plant's reminder date or 'Not set'
-              style: const TextStyle(fontSize: 18),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image.asset('assets/images/brownleaf.png'),
+                  ),
+                ),
+                const Text('Plant\'s Health'),
+              ],
             ),
-            if (reminderMessage.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  reminderMessage,
-                  style: const TextStyle(fontSize: 18, color: Colors.green),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: 280,
+                height: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFF3F3F3)),
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xFFF3F3F3),
+                      blurRadius: 3,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Watering Schedule: $wateringSchedule'),
+                    const SizedBox(height: 10),
+                    Text('Next Reminder: $reminderMessage'),
+                  ],
                 ),
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditPlantScreen(plant: widget.plant),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 70.0),
+              child: SizedBox(
+                width: 250,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditPlantScreen(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                   ),
-                ).then((updatedPlant) {
-                  // Handle the returned updated plant
-                  if (updatedPlant != null) {
-                    setState(() {
-                      // Update plant properties
-                      widget.plant.name = updatedPlant.name;
-                      widget.plant.wateringSchedule =
-                          updatedPlant.wateringSchedule;
-                      widget.plant.reminder = updatedPlant.reminder;
-                      widget.plant.enteredPlantName =
-                          updatedPlant.enteredPlantName;
-                      widget.plant.reminderMessage =
-                          updatedPlant.reminderMessage;
-                    });
-                  }
-                });
-              },
-              child: const Text('Edit'),
+                  child: const Text(
+                    'Edit',
+                    style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -95,6 +134,29 @@ class _PlantStatusScreenState extends State<PlantStatusScreen> {
     );
   }
 }
+
+class EditPlantScreen extends StatelessWidget {
+  const EditPlantScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Plant'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Add functionality for editing the plant
+          },
+          child: const Text('Save Changes'),
+        ),
+      ),
+    );
+  }
+}
+
+
 
   
 

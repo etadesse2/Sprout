@@ -59,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PlantStatusScreen(plant: plants[index]),
+                  builder: (context) =>
+                      PlantScreen(), // Navigate to PlantScreen
                 ),
               );
             },
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            PlantStatusScreen(plant: plants[index]),
+                            PlantScreen(), // Navigate to PlantScreen
                       ),
                     );
                   },
