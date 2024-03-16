@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:sprouts/plant_status.dart';
 
 class InformationScreen extends StatefulWidget {
   final String plantName;
@@ -11,6 +12,7 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
+  int screenIndex = 0;
   late Future<String> _plantInformation;
 
   @override
@@ -41,12 +43,20 @@ class _InformationScreenState extends State<InformationScreen> {
         toolbarHeight: 120,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          setState(() {
+            if (index == 1) {
+              Navigator.pop(context);
+            }
+          });
+        },
+        currentIndex: screenIndex,
         selectedItemColor: const Color.fromARGB(255, 28, 67, 30),
         unselectedItemColor: Colors.grey,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: SizedBox(
-                width: 16, child: Image.asset('assets/images/leaf-nobg.png')),
+                width: 16, child: Image.asset('assets/images/leaf.png')),
             label: 'Plant',
           ),
           const BottomNavigationBarItem(
@@ -56,80 +66,64 @@ class _InformationScreenState extends State<InformationScreen> {
         ],
       ),
       body: ListView(
-        children: const [
-          Info(
-            plantName: 'Peony',
-            imgPath: 'assets/images/peony.png',
-            generalInfo:
-                'Transform your garden into a paradise with our expert tips on growing peonies! These enchanting flowers thrive in well-drained, fertile soil with plenty of sunlight, ideally receiving at least 6 hours of direct sunlight per day. Plant them in a location with good air circulation to prevent diseases and ensure healthy growth. With proper care and the right conditions, you\'ll enjoy a bountiful display of peony blooms year after year, making your garden the envy of the neighborhood!',
-            wateringTip:
-                'Water peonies deeply once a week, adjusting based on weather conditions and soil moisture levels to maintain consistent moisture without waterlogging.',
-            sunTip:
-                'Ensure peonies receive at least 6 hours of direct sunlight daily for optimal growth and abundant blooms.',
-            health:
-                'Monitor for signs of fungal diseases such as botrytis or powdery mildew, especially during humid weather.',
-            diseaseInfo:
-                'Peonies, beloved for their beautiful blooms, can be susceptible to a few common diseases. Some of the diseases that affect peonies include:',
-            disease1:
-                'Botrytis Blight (Gray Mold): This fungal disease causes brown spots on leaves and stems, as well as gray mold on affected areas. It often thrives in cool, wet conditions.',
-            disease2:
-                'Powdery Mildew: Powdery mildew is a fungal disease characterized by white, powdery spots on leaves, stems, and sometimes flowers. It typically occurs in warm, humid environments.',
-            disease3:
-                'Leaf Spot: Leaf spot diseases, caused by various fungi, bacteria, or environmental stressors, result in dark spots or lesions on the leaves of peonies. These spots may vary in color and size.',
-            disease4:
-                'Verticillium Wilt: This soilborne fungal disease affects the vascular system of peonies, causing wilting, yellowing, and browning of foliage. It can lead to plant decline or death.',
-            disease5:
-                'Root Rot: Excessive moisture in the soil can lead to root rot in peonies, caused by various fungal pathogens. Symptoms include yellowing foliage, wilting, and decayed roots.',
-            disease6:
-                'Stem Rots: Several fungal pathogens can cause stem rots in peonies, resulting in dark, water-soaked lesions on stems and eventual wilting and collapse of affected stems.',
-          ),
-          // Info(
-          //   plantName: 'Peony',
-          //   imgPath: 'assets/images/tulip.png',
-          //   generalInfo: 'Transform your garden into a paradise with our expert tips on growing tulips! These enchanting flowers thrive in well-drained, fertile soil with plenty of sunlight, ideally receiving at least 6 hours of direct sunlight per day. Plant them in a location with good air circulation to prevent diseases and ensure healthy growth. With proper care and the right conditions, you\'ll enjoy a bountiful display of tulip blooms year after year, making your garden the envy of the neighborhood!',
-          //   wateringTip: 'Water tulips deeply once a week, adjusting based on weather conditions and soil moisture levels to maintain consistent moisture without waterlogging.',
-          //   sunTip: 'Ensure tulips receive at least 6 hours of direct sunlight daily for optimal growth and abundant blooms.',
-          //   health: 'Monitor for signs of fungal diseases such as tulip fire or botrytis blight, especially during humid weather.',
-          //   diseaseInfo: 'Tulips, beloved for their beautiful blooms, can be susceptible to a few common diseases. Some of the diseases that affect tulips include:',
-          //   disease1: 'Tulip Fire: This fungal disease causes distorted, discolored foliage and flowers, often with black spots or streaks. It spreads rapidly in moist conditions.',
-          //   disease2: 'Botrytis Blight (Gray Mold): This fungal disease causes brown spots on leaves and stems, as well as gray mold on affected areas. It often thrives in cool, wet conditions.',
-          //   disease3: 'Tulip Breaking Virus: This viral disease results in streaks or mottling of colors in tulip petals, leading to distorted or "broken" flowers. It can spread through infected bulbs.',
-          //   disease4: 'Root Rot: Excessive moisture in the soil can lead to root rot in tulips, caused by various fungal pathogens. Symptoms include yellowing foliage, wilting, and decayed roots.',
-          //   disease5: 'Stem Rots: Several fungal pathogens can cause stem rots in tulips, resulting in dark, water-soaked lesions on stems and eventual wilting and collapse of affected stems.',
-          //   disease6: 'Bulb Rot: Improper storage or planting conditions can lead to bulb rot in tulips, characterized by soft, mushy bulbs and foul odor. This can be caused by various fungal and bacterial pathogens.',
-          // ),
+        children: [
+          if (widget.plantName == 'Peony')
+            const Info(
+              plantName: 'Peony',
+              imgPath: 'assets/images/peony.png',
+              generalInfo:
+                  'Transform your garden into a paradise with our expert tips on growing peonies! These enchanting flowers thrive in well-drained, fertile soil with plenty of sunlight, ideally receiving at least 6 hours of direct sunlight per day. Plant them in a location with good air circulation to prevent diseases and ensure healthy growth. With proper care and the right conditions, you\'ll enjoy a bountiful display of peony blooms year after year, making your garden the envy of the neighborhood!',
+              wateringTip:
+                  'Water peonies deeply once a week, adjusting based on weather conditions and soil moisture levels to maintain consistent moisture without waterlogging.',
+              sunTip:
+                  'Ensure peonies receive at least 6 hours of direct sunlight daily for optimal growth and abundant blooms.',
+              health:
+                  'Monitor for signs of fungal diseases such as botrytis or powdery mildew, especially during humid weather.',
+              diseaseInfo:
+                  'Peonies, beloved for their beautiful blooms, can be susceptible to a few common diseases. Some of the diseases that affect peonies include:',
+              disease1:
+                  'Botrytis Blight (Gray Mold): This fungal disease causes brown spots on leaves and stems, as well as gray mold on affected areas. It often thrives in cool, wet conditions.',
+              disease2:
+                  'Powdery Mildew: Powdery mildew is a fungal disease characterized by white, powdery spots on leaves, stems, and sometimes flowers. It typically occurs in warm, humid environments.',
+              disease3:
+                  'Leaf Spot: Leaf spot diseases, caused by various fungi, bacteria, or environmental stressors, result in dark spots or lesions on the leaves of peonies. These spots may vary in color and size.',
+              disease4:
+                  'Verticillium Wilt: This soilborne fungal disease affects the vascular system of peonies, causing wilting, yellowing, and browning of foliage. It can lead to plant decline or death.',
+              disease5:
+                  'Root Rot: Excessive moisture in the soil can lead to root rot in peonies, caused by various fungal pathogens. Symptoms include yellowing foliage, wilting, and decayed roots.',
+              disease6:
+                  'Stem Rots: Several fungal pathogens can cause stem rots in peonies, resulting in dark, water-soaked lesions on stems and eventual wilting and collapse of affected stems.',
+            ),
+          if (widget.plantName == 'Tulip')
+            const Info(
+              plantName: 'Tulip',
+              imgPath: 'assets/images/tulip.png',
+              generalInfo:
+                  'Transform your garden into a paradise with our expert tips on growing tulips! These enchanting flowers thrive in well-drained, fertile soil with plenty of sunlight, ideally receiving at least 6 hours of direct sunlight per day. Plant them in a location with good air circulation to prevent diseases and ensure healthy growth. With proper care and the right conditions, you\'ll enjoy a bountiful display of tulip blooms year after year, making your garden the envy of the neighborhood!',
+              wateringTip:
+                  'Water tulips deeply once a week, adjusting based on weather conditions and soil moisture levels to maintain consistent moisture without waterlogging.',
+              sunTip:
+                  'Ensure tulips receive at least 6 hours of direct sunlight daily for optimal growth and abundant blooms.',
+              health:
+                  'Monitor for signs of fungal diseases such as tulip fire or botrytis blight, especially during humid weather.',
+              diseaseInfo:
+                  'Tulips, beloved for their beautiful blooms, can be susceptible to a few common diseases. Some of the diseases that affect tulips include:',
+              disease1:
+                  'Tulip Fire: This fungal disease causes distorted, discolored foliage and flowers, often with black spots or streaks. It spreads rapidly in moist conditions.',
+              disease2:
+                  'Botrytis Blight (Gray Mold): This fungal disease causes brown spots on leaves and stems, as well as gray mold on affected areas. It often thrives in cool, wet conditions.',
+              disease3:
+                  'Tulip Breaking Virus: This viral disease results in streaks or mottling of colors in tulip petals, leading to distorted or "broken" flowers. It can spread through infected bulbs.',
+              disease4:
+                  'Root Rot: Excessive moisture in the soil can lead to root rot in tulips, caused by various fungal pathogens. Symptoms include yellowing foliage, wilting, and decayed roots.',
+              disease5:
+                  'Stem Rots: Several fungal pathogens can cause stem rots in tulips, resulting in dark, water-soaked lesions on stems and eventual wilting and collapse of affected stems.',
+              disease6:
+                  'Bulb Rot: Improper storage or planting conditions can lead to bulb rot in tulips, characterized by soft, mushy bulbs and foul odor. This can be caused by various fungal and bacterial pathogens.',
+            ),
         ],
       ),
     );
-    // Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Plant Information'),
-    //   ),
-    //   body: FutureBuilder<String>(
-    //     future: _plantInformation,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //       if (snapshot.hasError) {
-    //         return Center(
-    //           child: Text('Error: ${snapshot.error}'),
-    //         );
-    //       }
-    //       return Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: SingleChildScrollView(
-    //           child: Text(
-    //             snapshot.data ?? '',
-    //             style: TextStyle(fontSize: 16),
-    //           ),
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
   }
 }
 
@@ -186,7 +180,7 @@ class Info extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: const EdgeInsets.only(top: 30.0),
+            padding: EdgeInsets.only(top: 30.0),
             child: Text('Suggest Tips',
                 style: TextStyle(fontSize: 20, color: Color(0xFF676767))),
           ),
@@ -257,14 +251,14 @@ class Info extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: const EdgeInsets.only(top: 30.0),
+            padding: EdgeInsets.only(top: 30.0),
             child: Text('Common Diseases',
                 style: TextStyle(fontSize: 20, color: Color(0xFF676767))),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 17, right: 45.0, left: 45),
             child: Text(diseaseInfo,
-                style: TextStyle(fontSize: 16, color: Color(0xFF676767))),
+                style: const TextStyle(fontSize: 16, color: Color(0xFF676767))),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 17, right: 45.0, left: 45),
