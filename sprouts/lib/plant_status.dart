@@ -11,11 +11,12 @@ class PlantStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
-          selectedPlant.enteredPlantName,
-          style: const TextStyle(
+        title: const Text(
+          'SPROUT',
+          style: TextStyle(
             letterSpacing: 10,
             fontSize: 40,
             color: Color.fromARGB(255, 28, 67, 30),
@@ -40,6 +41,19 @@ class PlantScreen extends StatefulWidget {
 
 class _PlantScreenState extends State<PlantScreen> {
   late Plant currentPlant;
+  int yesCount = 0;
+  int noCount = 0;
+  void yesIncr() {
+    setState(() {
+      yesCount++;
+    });
+  }
+
+  void noIncr() {
+    setState(() {
+      noCount++;
+    });
+  }
 
   @override
   void initState() {
@@ -50,73 +64,176 @@ class _PlantScreenState extends State<PlantScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            width: 120,
-            height: 120,
-            child: Image.asset(currentPlant.iconPath),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(currentPlant.name),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
-            child: SizedBox(
-              width: 100,
-              height: 100,
-              child: Image.asset('assets/images/brownleaf.png'),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 120,
+              height: 120,
+              child: Image.asset(currentPlant.iconPath),
             ),
-          ),
-          const Text('Plant\'s Health'),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Container(
-              width: 280,
-              height: 100,
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFF3F3F3)),
-                color: const Color.fromARGB(255, 255, 255, 255),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0xFFF3F3F3),
-                    blurRadius: 3,
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(currentPlant.name),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
+            //   child: SizedBox(
+            //     width: 100,
+            //     height: 100,
+            //     child: Image.asset('assets/images/brownleaf.png'),
+            //   ),
+            // ),
+            //const Text('Plant\'s Health'),
+            if (noCount > yesCount * 2)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: Image.asset('assets/images/leafbrown.png')),
+              ),
+            if (!(noCount > yesCount * 2))
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: Image.asset('assets/images/leaf.png')),
+              ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15.0, bottom: 20),
+              child: Text('Plant\'s Health'),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 15.0),
+              child: Text('Did you water Plant 1?'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                      onPressed: noIncr,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFB8B8B8),
+                      ),
+                      child: const Text('No',
+                          style: TextStyle(color: Colors.white))),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: yesIncr,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                    ),
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Watering Schedule: ${currentPlant.wateringSchedule}'),
-                  const SizedBox(height: 10),
-                  Text('Next Reminder: ${currentPlant.reminderMessage}'),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: ElevatedButton(
-              onPressed: updatePlant,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
+            if (noCount > yesCount * 2)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: Color(0xFFFFDE68),
+                      ),
+                      Text(
+                          'Your plant is under critical condition. For  more information on , check the info page.'),
+                    ],
+                  ),
                 ),
               ),
-              child: const Text(
-                'Edit',
-                style: TextStyle(
-                  color: Colors.white,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w400,
+            const Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Text('Watering Schedule'),
+            ),
+            Text('${currentPlant.wateringSchedule}'),
+            const SizedBox(height: 10),
+            Text('Next Reminder: ${currentPlant.reminderMessage}'),
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: SizedBox(
+                width: 250,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                    ),
+                    child: const Text(
+                      'Edit',
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const IconButton(
+                onPressed: null,
+                icon: Icon(
+                  Icons.ios_share_rounded,
+                  color: Color.fromARGB(255, 28, 67, 30),
+                )),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 15.0),
+            //   child: Container(
+            //     width: 280,
+            //     height: 100,
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: const Color(0xFFF3F3F3)),
+            //       color: const Color.fromARGB(255, 255, 255, 255),
+            //       borderRadius: BorderRadius.circular(20),
+            //       boxShadow: const [
+            //         BoxShadow(
+            //           color: Color(0xFFF3F3F3),
+            //           blurRadius: 3,
+            //         ),
+            //       ],
+            //     ),
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text('Watering Schedule: ${currentPlant.wateringSchedule}'),
+            //         const SizedBox(height: 10),
+            //         Text('Next Reminder: ${currentPlant.reminderMessage}'),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: ElevatedButton(
+                onPressed: updatePlant,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                child: const Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -137,117 +254,150 @@ class _PlantScreenState extends State<PlantScreen> {
   }
 }
 
+// class WaterTracking extends StatefulWidget {
+//   const WaterTracking({super.key});
 
-
-
-// import 'package:flutter/material.dart';
-// //import 'package:share_plus/share_plus.dart';
-
-// void main() {
-//   runApp(const MainApp());
+//   @override
+//   State<WaterTracking> createState() => _WaterTrackingState();
 // }
 
-// class MainApp extends StatelessWidget {
-//   const MainApp({super.key});
+// class _WaterTrackingState extends State<WaterTracking> {
+//   int yesCount = 0;
+//   int noCount = 0;
+//   void yesIncr() {
+//     setState(() {
+//       yesCount++;
+//     });
+//   }
+
+//   void noIncr() {
+//     setState(() {
+//       noCount++;
+//     });
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         backgroundColor: Colors.white,
-//         appBar: AppBar(
-//           backgroundColor: Colors.white,
-//           title: const Text(
-//             'SPROUT',
-//             style: TextStyle(
-//                 letterSpacing: 10,
-//                 fontSize: 40,
-//                 color: Color.fromARGB(255, 28, 67, 30)),
-//           ),
-//           centerTitle: true,
-//           toolbarHeight: 120,
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: SingleChildScrollView(
+//         child: Column(
+//           children: [
+//             SizedBox(
+//                 width: 100,
+//                 height: 100,
+//                 child: Image.asset('assets/images/peony.png')),
+//             const Padding(
+//               padding: EdgeInsets.only(top: 15.0, bottom: 20),
+//               child: Text('Plant Name'),
+//             ),
+//             if (noCount > yesCount * 2)
+//               Padding(
+//                 padding: const EdgeInsets.only(bottom: 20.0),
+//                 child: SizedBox(
+//                     width: 150,
+//                     height: 150,
+//                     child: Image.asset('assets/images/leafbrown.png')),
+//               ),
+//             if (!(noCount > yesCount * 2))
+//               Padding(
+//                 padding: const EdgeInsets.only(bottom: 20.0),
+//                 child: SizedBox(
+//                     width: 150,
+//                     height: 150,
+//                     child: Image.asset('assets/images/leaf.png')),
+//               ),
+//             const Padding(
+//               padding: EdgeInsets.only(top: 15.0, bottom: 20),
+//               child: Text('Plant\'s Health'),
+//             ),
+//             const Padding(
+//               padding: EdgeInsets.only(bottom: 15.0),
+//               child: Text('Did you water Plant 1?'),
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 SizedBox(
+//                   width: 150,
+//                   child: ElevatedButton(
+//                       onPressed: noIncr,
+//                       style: ElevatedButton.styleFrom(
+//                         backgroundColor: const Color(0xFFB8B8B8),
+//                       ),
+//                       child: const Text('No',
+//                           style: TextStyle(color: Colors.white))),
+//                 ),
+//                 const SizedBox(width: 10),
+//                 SizedBox(
+//                   width: 150,
+//                   child: ElevatedButton(
+//                     onPressed: yesIncr,
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+//                     ),
+//                     child: const Text(
+//                       'Yes',
+//                       style: TextStyle(color: Colors.white),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             if (noCount > yesCount * 2)
+//               const Center(
+//                 child: Padding(
+//                   padding: EdgeInsets.only(top: 15.0),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Icon(
+//                         Icons.warning_amber_rounded,
+//                         color: Color(0xFFFFDE68),
+//                       ),
+//                       Text(
+//                           'Your plant is under critical condition. For  more information on , check the info page.'),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             const Padding(
+//               padding: EdgeInsets.only(top: 30.0),
+//               child: Text('Watering Schedule'),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.only(top: 30.0),
+//               child: SizedBox(
+//                 width: 250,
+//                 child: ElevatedButton(
+//                     onPressed: () {},
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: const Color.fromARGB(255, 28, 67, 30),
+//                     ),
+//                     child: const Text(
+//                       'Edit',
+//                       style: TextStyle(color: Colors.white),
+//                     )),
+//               ),
+//             ),
+//             const SizedBox(
+//               height: 20,
+//             ),
+//             const IconButton(
+//                 onPressed: shareSchedule,
+//                 icon: Icon(
+//                   Icons.ios_share_rounded,
+//                   color: Color.fromARGB(255, 28, 67, 30),
+//                 )),
+//           ],
 //         ),
-//         body: const PlantScreen(),
 //       ),
 //     );
 //   }
 // }
 
-// class PlantScreen extends StatefulWidget {
-//   const PlantScreen({super.key});
-
-//   @override
-//   State<PlantScreen> createState() => _PlantScreenState();
+// void shareSchedule() {
+//   String scheduleShare =
+//       'Hey there! This is Person\'s Name watering schedule for Plant Name';
+//   //Share.share(scheduleShare);
 // }
-
-// class _PlantScreenState extends State<PlantScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Center(
-//         child: Column(
-//           children: [
-//             SizedBox(
-//                 width: 120,
-//                 height: 120,
-//                 child: Image.asset('assets/images/peony.png')),
-//             const Padding(
-//               padding: EdgeInsets.only(top: 15.0),
-//               child: Text('Plant 1'),
-//             ),
-//             Column(
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
-//                   child: SizedBox(
-//                     width: 100,
-//                     height: 100,
-//                     child: Image.asset('assets/images/brownleaf.png'),
-//                   ),
-//                 ),
-//                 const Text('Plant\'s Health'),
-//               ],
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(top: 15.0),
-//               child: Container(
-//                 width: 280,
-//                 height: 100,
-//                 decoration: BoxDecoration(
-//                   border: Border.all(color: const Color(0xFFF3F3F3)),
-//                   color: const Color.fromARGB(255, 255, 255, 255),
-//                   borderRadius: BorderRadius.circular(20),
-//                   boxShadow: const [
-//                     BoxShadow(
-//                       color: Color(0xFFF3F3F3),
-//                       blurRadius: 3,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(top: 70.0),
-//               child: SizedBox(
-//                 width: 250,
-//                 child: FloatingActionButton(
-//                   onPressed: null,
-//                   backgroundColor: const Color.fromARGB(255, 28, 67, 30),
-//                   shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(50)),
-//                   child: const Text(
-//                     'Edit',
-//                     style: TextStyle(
-//                         color: Colors.white,
-//                         letterSpacing: 1,
-//                         fontWeight: FontWeight.w400),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   };
