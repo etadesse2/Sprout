@@ -5,6 +5,7 @@ class Plant {
   DateTime? reminder; // Nullable DateTime
   String enteredPlantName; // New field
   String? reminderMessage; // Nullable String
+  String plantType; // New field
 
   Plant({
     required this.name,
@@ -13,6 +14,7 @@ class Plant {
     this.reminder, // Nullable DateTime
     required this.enteredPlantName,
     this.reminderMessage, // Nullable String
+    required this.plantType, // New field
   });
 
   // Setter method for updating enteredPlantName

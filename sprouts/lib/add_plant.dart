@@ -266,12 +266,14 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   Plant newPlant = Plant(
-                    name: _selectedPlant ?? _enteredPlantName,
+                    name: _enteredPlantName,
                     iconPath: plantNamesAndIcons[_selectedPlant] ?? '',
                     wateringSchedule: _generateWateringSchedule(),
                     reminder: _receiveReminders ? DateTime.now() : null,
                     enteredPlantName: _enteredPlantName,
                     reminderMessage: reminderMessage,
+                    plantType: _selectedPlant ??
+                        'Unknown', // Provide the plantType value
                   );
 
                   Navigator.pop(context, newPlant);
