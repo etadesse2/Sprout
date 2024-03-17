@@ -79,6 +79,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
           'SPROUT',

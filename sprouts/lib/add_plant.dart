@@ -29,6 +29,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
           'SPROUT',
