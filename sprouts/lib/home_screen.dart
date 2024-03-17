@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight: 70,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
@@ -59,13 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
         bottom: const PreferredSize(
             preferredSize: Size.fromHeight(40),
             child: Padding(
-              padding: EdgeInsets.only(left: 50.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'My Plants',
-                  style: TextStyle(fontSize: 20),
-                ),
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Text(
+                'My Plants',
+                style: TextStyle(fontSize: 20, color: Color(0xFF676767)),
               ),
             )),
       ),
