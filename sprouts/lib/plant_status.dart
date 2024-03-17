@@ -252,7 +252,7 @@ class _PlantScreenState extends State<PlantScreen> {
 
     if (updatedPlant != null) {
       setState(() {
-        currentPlant = updatedPlant as Plant;
+        Navigator.pop(context, updatedPlant);
       });
     }
   }

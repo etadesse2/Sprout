@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (updatedPlant != null) {
       setState(() {
-        plants[index] = updatedPlant as Plant;
+        plants[index] = updatedPlant;
       });
     }
   }
