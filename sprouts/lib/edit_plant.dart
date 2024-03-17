@@ -139,7 +139,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, null);
+                Navigator.pop(context, 'remove');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFF5F5F5),

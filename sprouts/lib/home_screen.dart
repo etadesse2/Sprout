@@ -28,16 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _navigateToPlantStatusScreen(
       BuildContext context, Plant selectedPlant, int index) async {
-    final updatedPlant = await Navigator.push(
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => PlantStatusScreen(selectedPlant: selectedPlant),
       ),
     );
 
-    if (updatedPlant != null) {
+    if (result == 'remove') {
       setState(() {
-        plants[index] = updatedPlant;
+        plants.removeAt(index);
+      });
+    } else if (result is Plant) {
+      setState(() {
+        plants[index] = result;
       });
     }
   }

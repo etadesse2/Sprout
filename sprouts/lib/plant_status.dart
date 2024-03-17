@@ -94,15 +94,6 @@ class _PlantScreenState extends State<PlantScreen> {
               padding: const EdgeInsets.only(top: 15.0, bottom: 15),
               child: Text(currentPlant.name),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
-            //   child: SizedBox(
-            //     width: 100,
-            //     height: 100,
-            //     child: Image.asset('assets/images/brownleaf.png'),
-            //   ),
-            // ),
-            //const Text('Plant\'s Health'),
             if (noCount > yesCount * 2)
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
@@ -210,32 +201,6 @@ class _PlantScreenState extends State<PlantScreen> {
                   Icons.ios_share_rounded,
                   color: Color.fromARGB(255, 28, 67, 30),
                 )),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 15.0),
-            //   child: Container(
-            //     width: 280,
-            //     height: 100,
-            //     decoration: BoxDecoration(
-            //       border: Border.all(color: const Color(0xFFF3F3F3)),
-            //       color: const Color.fromARGB(255, 255, 255, 255),
-            //       borderRadius: BorderRadius.circular(20),
-            //       boxShadow: const [
-            //         BoxShadow(
-            //           color: Color(0xFFF3F3F3),
-            //           blurRadius: 3,
-            //         ),
-            //       ],
-            //     ),
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Text('Watering Schedule: ${currentPlant.wateringSchedule}'),
-            //         const SizedBox(height: 10),
-            //         Text('Next Reminder: ${currentPlant.reminderMessage}'),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -243,23 +208,22 @@ class _PlantScreenState extends State<PlantScreen> {
   }
 
   void updatePlant() async {
-    final updatedPlant = await Navigator.push(
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditPlantScreen(plant: currentPlant),
       ),
     );
 
-    if (updatedPlant != null) {
+    if (result == 'remove') {
+      // Just pop with 'remove' to tell HomeScreen to remove the plant
+      Navigator.pop(context, 'remove');
+    } else if (result is Plant) {
+      // Update the plant in the current screen and pass the updated plant back to HomeScreen
       setState(() {
-        Navigator.pop(context, updatedPlant);
+        currentPlant = result;
       });
+      Navigator.pop(context, result); // Pass the updated plant back
     }
   }
 }
-
-// void shareSchedule() async {
-//   String scheduleShare =
-//       'Hey there! This is Person\'s Name watering schedule for Plant Name';
-//   await Share.share(scheduleShare);
-// }
