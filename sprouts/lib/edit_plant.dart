@@ -35,34 +35,34 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
     // Assuming your Plant class has a method to parse the watering schedule to get hour, minute, isAM, and selectedDays
   }
 
-  Widget buildDayButton(String day) {
+  Widget buildDayButton(String abbreviation, String dayName) {
     return TextButton(
       onPressed: () {
         setState(() {
-          if (selectedDays.contains(day)) {
-            selectedDays.remove(day);
+          if (selectedDays.contains(dayName)) {
+            selectedDays.remove(dayName);
           } else {
-            selectedDays.add(day);
+            selectedDays.add(dayName);
           }
         });
       },
       style: TextButton.styleFrom(
-        backgroundColor: selectedDays.contains(day)
+        backgroundColor: selectedDays.contains(dayName)
             ? const Color.fromARGB(255, 28, 67, 30)
             : Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: selectedDays.contains(day)
+            color: selectedDays.contains(dayName)
                 ? Colors.transparent
                 : const Color.fromARGB(0, 103, 103, 103),
           ),
         ),
       ),
       child: Text(
-        day,
+        abbreviation,
         style: TextStyle(
-          color: selectedDays.contains(day)
+          color: selectedDays.contains(dayName)
               ? Colors.white
               : const Color(0xFF676767),
         ),
@@ -213,12 +213,6 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                   ),
                 );
               }).toList(),
-              // plantNamesAndIcons.keys.map((String value) {
-              //   return DropdownMenuItem<String>(
-              //     value: value,
-              //     child: Text(value),
-              //   );
-              // }).toList(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0, left: 20, right: 20),
@@ -238,13 +232,13 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                           child: Wrap(
                             spacing: 10,
                             children: [
-                              buildDayButton('M'),
-                              buildDayButton('T'),
-                              buildDayButton('W'),
-                              buildDayButton('Th'),
-                              buildDayButton('F'),
-                              buildDayButton('S'),
-                              buildDayButton('Su'),
+                              buildDayButton('M', 'Monday'),
+                              buildDayButton('T', 'Tuesday'),
+                              buildDayButton('W', 'Wednesday'),
+                              buildDayButton('Th', 'Thursday'),
+                              buildDayButton('F', 'Friday'),
+                              buildDayButton('S', 'Saturday'),
+                              buildDayButton('Su', 'Sunday'),
                             ],
                           ),
                         ),
