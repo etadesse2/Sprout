@@ -25,6 +25,23 @@ class PlantStatusScreen extends StatelessWidget {
         ),
         centerTitle: true,
         toolbarHeight: 120,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 40.0),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InformationScreen(
+                              plantName: selectedPlant.name)));
+                },
+                icon: const Icon(
+                  Icons.info_outline_rounded,
+                  color: Color.fromARGB(255, 28, 67, 30),
+                )),
+          )
+        ],
       ),
       body: PlantScreen(plant: selectedPlant),
     );
