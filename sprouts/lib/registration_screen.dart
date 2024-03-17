@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login_screen.dart'; // Adjust the import path as necessary
+import 'login_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -13,7 +13,6 @@ class RegistrationScreen extends StatelessWidget {
     await prefs.setString('username', _usernameController.text);
     await prefs.setString('password', _passwordController.text);
     Navigator.pushReplacement(
-      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),
     );

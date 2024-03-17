@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'plant.dart'; // Ensure this import is correct
+import 'plant.dart';
 
 class AddPlantScreen extends StatefulWidget {
   @override
@@ -12,12 +12,10 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   String _wateringSchedule = '';
   DateTime _selectedDate = DateTime.now();
 
-  // Update with actual plant names and their icons
   final Map<String, String> plantNamesAndIcons = {
     "Aloe Vera": "icons/aloe_vera.png",
     "Snake Plant": "icons/snake_plant.png",
     "Fiddle Leaf Fig": "icons/fiddle_leaf_fig.png",
-    // Add more plants and their icon paths
   };
 
   Future<void> _selectDate(BuildContext context) async {
@@ -71,7 +69,6 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // Assuming icon selection is based on plant name
                   String iconPath = plantNamesAndIcons[_selectedPlant] ?? '';
                   Plant newPlant = Plant(
                     name: _selectedPlant ?? 'Unknown',

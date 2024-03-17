@@ -1,7 +1,6 @@
-// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'plant.dart'; // Ensure this is correctly pointing to your Plant model
+import 'plant.dart';
 
 class EditPlantScreen extends StatefulWidget {
   final Plant plant;
@@ -18,12 +17,10 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
   late DateTime _reminder;
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
-  // Assuming these are your plant options
   final List<String> _plantOptions = [
     "Aloe Vera",
     "Snake Plant",
     "Fiddle Leaf Fig",
-    // Add other plants as needed
   ];
 
   @override
@@ -46,8 +43,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
               if (_formKey.currentState!.validate()) {
                 Plant updatedPlant = Plant(
                   name: _selectedPlant,
-                  iconPath: widget.plant
-                      .iconPath, // Keep the original icon path for simplicity
+                  iconPath: widget.plant.iconPath,
                   wateringSchedule: _wateringSchedule,
                   reminder: _reminder,
                 );

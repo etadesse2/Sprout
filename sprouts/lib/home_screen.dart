@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart'; // Import Eva Icons package
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'add_plant.dart';
 import 'plant.dart';
 import 'plant_status.dart';
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Plants'),
-        automaticallyImplyLeading: false, // Disable the back button
+        automaticallyImplyLeading: false,
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.green,
         child: const Icon(
           EvaIcons.plus,
-        ), // Using Eva Icons for the FloatingActionButton
+        ),
       ),
     );
   }

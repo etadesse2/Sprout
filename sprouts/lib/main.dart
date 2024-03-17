@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouts/login_screen.dart'; // Import the LoginScreen
+import 'package:sprouts/login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: LoginScreen(), // Set LoginScreen as the initial screen
+      home: LoginScreen(),
     );
   }
 }

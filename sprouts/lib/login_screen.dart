@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sprouts/home_screen.dart'; // Import HomeScreen
-import 'registration_screen.dart'; // Import RegistrationScreen
+import 'package:sprouts/home_screen.dart';
+import 'registration_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -19,8 +19,7 @@ class LoginScreen extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              const HomeScreen(), // Navigate directly to HomeScreen
+          builder: (context) => const HomeScreen(),
         ),
       );
     } else {
