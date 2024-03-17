@@ -93,6 +93,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         controller: _passwordController,
+                        obscureText:
+                            true, // Added this line to hide the password
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Password',

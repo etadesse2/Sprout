@@ -134,10 +134,11 @@ class RegistrationScreen extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter phone number';
-                            }
-                            if (!(value.length == 10)) {
-                              return 'Invalid phone number';
+                              return 'Please enter a phone number';
+                            } else if (value.length != 10) {
+                              return 'Phone number must be 10 digits long';
+                            } else if (int.tryParse(value) == null) {
+                              return 'Invalid phone number, only digits are allowed';
                             }
                             return null;
                           },
