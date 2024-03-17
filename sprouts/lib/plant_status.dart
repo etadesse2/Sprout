@@ -34,7 +34,7 @@ class PlantStatusScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => InformationScreen(
-                              plantName: selectedPlant.name)));
+                              plantName: selectedPlant.plantType)));
                 },
                 icon: const Icon(
                   Icons.info_outline_rounded,
