@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sprouts/information.dart';
 import 'plant.dart';
 import 'edit_plant.dart';
-//import 'package:share_plus/share_plus.dart';
 
 class PlantStatusScreen extends StatelessWidget {
   final Plant selectedPlant;
