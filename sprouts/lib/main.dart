@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprouts/home_screen.dart';
 import 'package:sprouts/login_screen.dart'; // Import the LoginScreen
 
 void main() => runApp(const MyApp());

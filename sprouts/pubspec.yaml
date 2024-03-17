@@ -39,7 +39,6 @@ dependencies:
   day_picker: ^2.2.0
   numberpicker: ^2.1.2
   flutter_datetime_picker: ^1.5.1
-  share_plus: any
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sprouts/information.dart';
 import 'plant.dart';
 import 'edit_plant.dart';
-import 'package:share_plus/share_plus.dart';
+//import 'package:share_plus/share_plus.dart';
 
 class PlantStatusScreen extends StatelessWidget {
   final Plant selectedPlant;
@@ -77,15 +77,6 @@ class _PlantScreenState extends State<PlantScreen> {
   void initState() {
     super.initState();
     currentPlant = widget.plant;
-  }
-
-  void showShareMessage() {
-    String message =
-        "Hey, I wanted to share my ${currentPlant.name}'s watering schedule with you. "
-        "Please make sure to ${currentPlant.wateringSchedule}. "
-        "Thank you!";
-
-    Share.share(message);
   }
 
   @override
@@ -204,13 +195,12 @@ class _PlantScreenState extends State<PlantScreen> {
             const SizedBox(
               height: 20,
             ),
-            IconButton(
-              icon: Icon(
-                Icons.ios_share_rounded,
-                color: Color.fromARGB(255, 28, 67, 30),
-              ),
-              onPressed: showShareMessage,
-            ),
+            const IconButton(
+                onPressed: null,
+                icon: Icon(
+                  Icons.ios_share_rounded,
+                  color: Color.fromARGB(255, 28, 67, 30),
+                )),
           ],
         ),
       ),
