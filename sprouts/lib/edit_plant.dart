@@ -167,7 +167,11 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
           children: [
             TextFormField(
               initialValue: _enteredPlantName,
-              decoration: const InputDecoration(labelText: 'Plant Name'),
+              decoration: const InputDecoration(
+                  labelText: 'Plant Name',
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 28, 67, 30)))),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a plant name';
@@ -177,6 +181,12 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
               onChanged: (value) => _enteredPlantName = value,
             ),
             DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color.fromARGB(255, 28, 67, 30))),
+              ),
+              dropdownColor: Colors.white,
               value: _selectedPlantType,
               hint: const Text('Select a plant type'),
               onChanged: (newValue) {
@@ -184,12 +194,30 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
                   _selectedPlantType = newValue;
                 });
               },
-              items: plantNamesAndIcons.keys.map((String value) {
+              items: plantNamesAndIcons.keys
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 40,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(plantNamesAndIcons[value]!),
+                        ),
+                      ),
+                      Text(value),
+                    ],
+                  ),
                 );
               }).toList(),
+              // plantNamesAndIcons.keys.map((String value) {
+              //   return DropdownMenuItem<String>(
+              //     value: value,
+              //     child: Text(value),
+              //   );
+              // }).toList(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0, left: 20, right: 20),
@@ -313,7 +341,7 @@ class _EditPlantScreenState extends State<EditPlantScreen> {
             CheckboxListTile(
               activeColor: const Color.fromARGB(255, 28, 67, 30),
               controlAffinity: ListTileControlAffinity.leading,
-              title: const Text('Receive reminders'),
+              title: const Center(child: Text('Receive reminders')),
               value: _receiveReminders,
               onChanged: (bool? value) {
                 setState(() {
