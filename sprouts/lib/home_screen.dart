@@ -4,7 +4,7 @@ import 'plant_status.dart';
 import 'plant.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddPlantScreen()),
+      MaterialPageRoute(builder: (context) => const AddPlantScreen()),
     );
 
     if (result != null && result is Plant) {

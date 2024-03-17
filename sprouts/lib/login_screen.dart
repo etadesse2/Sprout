@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
   Future<void> _login(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
@@ -150,7 +150,7 @@ class LoginScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => RegistrationScreen()));
                       },
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       elevation: 0,

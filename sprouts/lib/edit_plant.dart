@@ -5,7 +5,7 @@ import 'plant.dart';
 class EditPlantScreen extends StatefulWidget {
   final Plant plant;
 
-  const EditPlantScreen({required this.plant});
+  const EditPlantScreen({super.key, required this.plant});
 
   @override
   _EditPlantScreenState createState() => _EditPlantScreenState();

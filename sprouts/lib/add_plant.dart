@@ -4,6 +4,8 @@ import 'package:numberpicker/numberpicker.dart';
 import 'plant.dart';
 
 class AddPlantScreen extends StatefulWidget {
+  const AddPlantScreen({super.key});
+
   @override
   _AddPlantScreenState createState() => _AddPlantScreenState();
 }

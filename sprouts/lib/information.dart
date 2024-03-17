@@ -5,7 +5,7 @@ import 'package:sprouts/plant_status.dart';
 class InformationScreen extends StatefulWidget {
   final String plantName;
 
-  InformationScreen({required this.plantName});
+  const InformationScreen({super.key, required this.plantName});
 
   @override
   _InformationScreenState createState() => _InformationScreenState();
@@ -142,7 +142,7 @@ class Info extends StatelessWidget {
   final String disease6;
 
   const Info({
-    Key? key,
+    super.key,
     required this.plantName,
     required this.imgPath,
     required this.generalInfo,
@@ -156,7 +156,7 @@ class Info extends StatelessWidget {
     required this.disease4,
     required this.disease5,
     required this.disease6,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

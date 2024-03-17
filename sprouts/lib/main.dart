@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sprouts/home_screen.dart';
 import 'package:sprouts/login_screen.dart'; // Import the LoginScreen
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

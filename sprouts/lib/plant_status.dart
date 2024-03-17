@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sprouts/information.dart';
 import 'plant.dart';
 import 'edit_plant.dart';
+//import 'package:share_plus/share_plus.dart';
 
 class PlantStatusScreen extends StatelessWidget {
   final Plant selectedPlant;
 
-  const PlantStatusScreen({Key? key, required this.selectedPlant})
-      : super(key: key);
+  const PlantStatusScreen({super.key, required this.selectedPlant});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class PlantStatusScreen extends StatelessWidget {
 class PlantScreen extends StatefulWidget {
   final Plant plant;
 
-  const PlantScreen({Key? key, required this.plant}) : super(key: key);
+  const PlantScreen({super.key, required this.plant});
 
   @override
   State<PlantScreen> createState() => _PlantScreenState();
@@ -241,8 +241,8 @@ class _PlantScreenState extends State<PlantScreen> {
   }
 }
 
-// void shareSchedule() {
+// void shareSchedule() async {
 //   String scheduleShare =
 //       'Hey there! This is Person\'s Name watering schedule for Plant Name';
-//   //Share.share(scheduleShare);
+//   await Share.share(scheduleShare);
 // }

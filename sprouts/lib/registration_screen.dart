@@ -10,7 +10,7 @@ class RegistrationScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  RegistrationScreen({Key? key}) : super(key: key);
+  RegistrationScreen({super.key});
 
   Future<void> _register(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
