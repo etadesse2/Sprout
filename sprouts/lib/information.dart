@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:sprouts/plant_status.dart';
+
 
 class InformationScreen extends StatefulWidget {
   final String plantName;
