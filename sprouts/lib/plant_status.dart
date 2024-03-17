@@ -146,12 +146,18 @@ class _PlantScreenState extends State<PlantScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.warning_amber_rounded,
-                        color: Color(0xFFFFDE68),
+                      Padding(
+                        padding: EdgeInsets.only(right: 12.0),
+                        child: Icon(
+                          Icons.warning_amber_rounded,
+                          color: Color(0xFFFFDE68),
+                        ),
                       ),
-                      Text(
-                          'Your plant is under critical condition. For  more information on , check the info page.'),
+                      SizedBox(
+                        width: 300,
+                        child: Text(
+                            'Your plant is under critical condition. For  more information on , check the info page.'),
+                      ),
                     ],
                   ),
                 ),
