@@ -15,6 +15,10 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+Application Layout, Design and Functionality:
+https://www.canva.com/design/DAF_y5gdwDY/y8wL1RSitF9oPSId84Ifig/view?utm_content=DAF_y5gdwDY&utm_campaign=designshare&utm_medium=link&utm_source=editor 
+
+
 Instruction to run this App:
 
 Clone the Repository:
